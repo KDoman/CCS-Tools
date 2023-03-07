@@ -1,0 +1,39 @@
+.logo {
+  max-height: 100px;
+  max-width: 150px;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 3px 5px 0px rgb(205, 205, 205);
+}
+.navbar-list {
+  width: calc(100% - 150px);
+}
+.navbar-list ul {
+  display: flex;
+  justify-content: space-evenly;
+}
+.navbar-list li {
+  list-style: none;
+}
+
+.navbar-list a {
+  text-decoration: none;
+  color: black;
+}
+
+.navbar-list button {
+  border: none;
+  background-color: rgba(109, 162, 236, 0.549);
+  border-radius: 0.6em;
+  padding: 0.5em 1em;
+  font-size: 0.9em;
+  transition: ease-in-out background-color 0.3s;
+  border: 2px solid grey;
+}
+
+.navbar-list button:hover {
+  background-color: rgb(59, 187, 250, 0.85);
+}

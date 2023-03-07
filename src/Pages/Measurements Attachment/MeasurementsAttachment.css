@@ -1,0 +1,89 @@
+.measurement-attachment-fomr-container {
+  display: grid;
+  grid-template-columns: repeat(2, 100px);
+  grid-template-rows: repeat(4, 30px);
+  text-align: center;
+  justify-content: center;
+  margin-top: 0.5em;
+  gap: 5px;
+}
+.h1Enter,
+.h1Defaults,
+.h1DefaultMeasurements {
+  text-align: center;
+}
+.pCenter {
+  text-align: center;
+  margin-bottom: 1em;
+}
+.labelX {
+  grid-column: 1;
+  grid-row: 1;
+  border: 1px solid black;
+}
+.labelY {
+  grid-column: 1;
+  grid-row: 2;
+  border: 1px solid black;
+}
+.labelZ {
+  grid-column: 1;
+  grid-row: 3;
+  border: 1px solid black;
+}
+.inputX {
+  grid-column: 2;
+  grid-row: 1;
+}
+.inputY {
+  grid-column: 2;
+  grid-row: 2;
+}
+.inputZ {
+  grid-column: 2;
+  grid-row: 3;
+}
+
+.defaultMeasurements {
+  border: 2px solid grey;
+  background-color: rgb(109, 162, 236, 0.55);
+  border-radius: 1em;
+  padding: 0.5em 2em;
+}
+
+.measurementAttachmentResult {
+  margin-top: 0.5em;
+  margin-bottom: 3em;
+  display: flex;
+  justify-content: space-evenly;
+}
+.defaultsKinds {
+  border: 2px solid grey;
+  border-radius: 1em;
+  padding: 0.5em 2em;
+  grid-column: 2;
+  margin: 0.3em;
+  background-color: rgb(109, 162, 236, 0.55);
+}
+
+.measurementAttachmentRotationContainer {
+  display: flex;
+  justify-content: space-evenly;
+}
+.measurementAttachmentResultRotation {
+  display: grid;
+  grid-template-columns: 2;
+  grid-template-rows: 2;
+}
+.squareCornerImg {
+  width: 150px;
+  height: auto;
+}
+.cornerImgDiv {
+  grid-row-start: 1;
+  grid-row-end: 3;
+  margin: auto 0;
+}
+.defaultsNoRotation {
+  display: flex;
+}
