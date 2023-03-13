@@ -27,7 +27,6 @@
 .navbar-list button {
   border: none;
   background-color: rgba(109, 162, 236, 0.549);
-  border-radius: 0.6em;
   padding: 0.5em 1em;
   font-size: 1em;
   transition: ease-in-out background-color 0.3s;
@@ -40,7 +39,6 @@
   bottom: 0;
   left: 0;
   content: "";
-  border-radius: 0.6em;
   width: 100%;
   background-color: rgba(20, 177, 255, 0.85);
   transform: scaleX(0);

@@ -13,7 +13,7 @@ export function Navbar() {
         <ul>
           <li>
             <button>
-              <Link className="link" to="/">
+              <Link className="link" to="/CSS-Tools/">
                 Home Page
               </Link>
             </button>
