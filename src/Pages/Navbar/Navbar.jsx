@@ -4,7 +4,11 @@ import { Link } from "react-router-dom";
 export function Navbar() {
   return (
     <div className="navbar">
-      <img className="logo" src="/ccs-tools.png" alt="CCS-TOOLS Logo"></img>
+      <img
+        className="logo"
+        src="./assets/img/ccs-tools.png"
+        alt="CCS-TOOLS Logo"
+      ></img>
       <div className="navbar-list">
         <ul>
           <li>

@@ -11,7 +11,7 @@ export function HomePage() {
           <Link to="/MeasurementAttachment">
             <img
               className="imgCard"
-              src="/assets/img/Measurement-Attachment-Card.png"
+              src="./assets/img/Measurement-Attachment-Card.png"
               alt="Measurement Attachmend Card img"
             />
           </Link>
