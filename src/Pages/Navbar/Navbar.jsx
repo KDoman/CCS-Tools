@@ -6,7 +6,7 @@ export function Navbar() {
     <div className="navbar">
       <img
         className="logo"
-        src="./assets/img/ccs-tools.png"
+        src="/assets/img/ccs-tools.png"
         alt="CCS-TOOLS Logo"
       ></img>
       <div className="navbar-list">
