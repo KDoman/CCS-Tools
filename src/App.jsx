@@ -30,7 +30,7 @@ function App() {
         <Router>
           <Navbar />
           <Routes>
-            <Route path="/" element={<HomePage />} />
+            <Route path="/CCS-Tools" element={<HomePage />} />
             <Route
               path="/MeasurementAttachment"
               element={<MeasurementsAttachment />}
