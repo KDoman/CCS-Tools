@@ -88,7 +88,7 @@ export function Defaults() {
             <div className="measurementAttachmentResultRotation">
               <div className="cornerImgDiv">
                 <img
-                  src="Images/Rotation-kind-left.png"
+                  src="/Images/Rotation-kind-left.png"
                   alt="Rotation Kind Left"
                   className="squareCornerImg"
                 />
