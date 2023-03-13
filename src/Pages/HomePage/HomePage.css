@@ -43,3 +43,6 @@ h1 {
 .homePageButtons:hover {
   background-color: rgb(59, 187, 250, 0.85);
 }
+.homepage-title {
+  font-weight: 500;
+}

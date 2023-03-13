@@ -4,7 +4,7 @@ import "./HomePage.css";
 export function HomePage() {
   return (
     <div className="homepage-intro">
-      <h1> CCS TOOL PAGE </h1>
+      <h1 className="homepage-title"> CSS TOOL PAGE </h1>
 
       <div className="homapage-card-container">
         <div className="homepage-card">
