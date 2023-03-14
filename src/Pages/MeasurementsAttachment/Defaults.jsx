@@ -35,7 +35,7 @@ export function Defaults() {
             <div className="defaultsNoRotation">
               <div>
                 <img
-                  src="./no-rotationkindleft.png"
+                  src="https://raw.githubusercontent.com/KDoman/CCS-Tools/main/public/no-rotationkindleft.png"
                   alt="No rotation kind left"
                 />
               </div>
