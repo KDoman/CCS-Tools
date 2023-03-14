@@ -3,7 +3,7 @@ import { Navbar } from "./Pages/Navbar/Navbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { HomePage } from "./Pages/HomePage/HomePage";
 import { MeasurementPredicates } from "./Pages/MeasurementPredicates/MeasurementPredicates";
-import { MeasurementsAttachment } from "./Pages/Measurements Attachment/MeasurementsAttachment";
+import { MeasurementsAttachment } from "./Pages/MeasurementsAttachment/MeasurementsAttachment";
 import { useState, createContext } from "react";
 
 export const FormContext = createContext();

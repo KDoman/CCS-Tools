@@ -16,7 +16,7 @@ export function Defaults() {
             <div className="defaultsNoRotation">
               <div>
                 <img
-                  src="measurement-attachment-card.png"
+                  src="../norotationkindright.png"
                   alt="No rotation kind right"
                 ></img>
               </div>
@@ -35,7 +35,7 @@ export function Defaults() {
             <div className="defaultsNoRotation">
               <div>
                 <img
-                  src="./no-rotationkindleft.png"
+                  src="../no-rotationkindleft.png"
                   alt="No rotation kind left"
                 />
               </div>
@@ -88,7 +88,7 @@ export function Defaults() {
             <div className="measurementAttachmentResultRotation">
               <div className="cornerImgDiv">
                 <img
-                  src="/rotation-kind-left.png"
+                  src="../rotation-kind-left.png"
                   alt="Rotation Kind Left"
                   className="squareCornerImg"
                 />
