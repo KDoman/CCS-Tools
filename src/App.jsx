@@ -30,13 +30,13 @@ function App() {
         <Router>
           <Navbar />
           <Routes>
-            <Route path="/CCS-Tools" element={<HomePage />} />
+            <Route path="/CCS-Tools/" element={<HomePage />} />
             <Route
-              path="/MeasurementAttachment"
+              path="/MeasurementAttachment/"
               element={<MeasurementsAttachment />}
             />
             <Route
-              path="/MeasurementPredicates"
+              path="/MeasurementPredicates/"
               element={<MeasurementPredicates />}
             />
           </Routes>
