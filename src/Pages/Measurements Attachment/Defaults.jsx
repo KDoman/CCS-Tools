@@ -16,7 +16,7 @@ export function Defaults() {
             <div className="defaultsNoRotation">
               <div>
                 <img
-                  src="./measurement-attachment-card.png"
+                  src="measurement-attachment-card.png"
                   alt="No rotation kind right"
                 ></img>
               </div>
