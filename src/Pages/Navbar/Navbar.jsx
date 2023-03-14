@@ -9,7 +9,7 @@ export function Navbar() {
         <ul>
           <li>
             <button>
-              <Link className="link" to="/CCS-Tools">
+              <Link className="link" to="/CCS-Tools/">
                 Home Page
               </Link>
             </button>
