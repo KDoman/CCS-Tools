@@ -35,7 +35,7 @@ export function Defaults() {
             <div className="defaultsNoRotation">
               <div>
                 <img
-                  src="/no-rotation-kind-left.png"
+                  src="./no-rotationkindleft.png"
                   alt="No rotation kind left"
                 />
               </div>
