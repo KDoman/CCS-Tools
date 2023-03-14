@@ -16,7 +16,7 @@ export function Defaults() {
             <div className="defaultsNoRotation">
               <div>
                 <img
-                  src="./norotationkindright.png"
+                  src="https://raw.githubusercontent.com/KDoman/CCS-Tools/main/public/norotationkindright.png"
                   alt="No rotation kind right"
                 ></img>
               </div>
@@ -61,7 +61,7 @@ export function Defaults() {
             <div className="measurementAttachmentResultRotation">
               <div className="cornerImgDiv">
                 <img
-                  src="./rotation-kind-right.png"
+                  src="https://raw.githubusercontent.com/KDoman/CCS-Tools/main/public/rotation-kind-right.png"
                   alt="Rotation Kind Right"
                   className="squareCornerImg"
                 />
@@ -88,7 +88,7 @@ export function Defaults() {
             <div className="measurementAttachmentResultRotation">
               <div className="cornerImgDiv">
                 <img
-                  src="./rotation-kind-left.png"
+                  src="https://raw.githubusercontent.com/KDoman/CCS-Tools/main/public/rotation-kind-left.png"
                   alt="Rotation Kind Left"
                   className="squareCornerImg"
                 />
