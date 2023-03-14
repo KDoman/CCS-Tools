@@ -12,7 +12,9 @@ export function MeasurementPredicates() {
 
   return (
     <div className="measurement-predicates-container">
-      <h1>MEASUREMENT PREDICATES TSV</h1>
+      <h1>
+        MEASUREMENT PREDICATES TSV <br></br>(in progress)
+      </h1>
       <PredicatesForm />
       <input type="text" onChange={(e) => setText(e.target.value)} />
       {text}

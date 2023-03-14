@@ -8,7 +8,7 @@ export function HomePage() {
 
       <div className="homapage-card-container">
         <div className="homepage-card">
-          <Link to="/MeasurementAttachment">
+          <Link to="/MeasurementAttachment/">
             <img
               className="imgCard"
               src="./measurement-attachment-card.png"

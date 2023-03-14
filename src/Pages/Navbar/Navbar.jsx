@@ -16,14 +16,14 @@ export function Navbar() {
           </li>
           <li>
             <button>
-              <Link className="link" to="/MeasurementAttachment">
+              <Link className="link" to="/MeasurementAttachment/">
                 Measurement Attachment
               </Link>
             </button>
           </li>
           <li>
             <button>
-              <Link className="link" to="/MeasurementPredicates">
+              <Link className="link" to="/MeasurementPredicates/">
                 Measurement Predicates
               </Link>
             </button>

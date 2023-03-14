@@ -44,6 +44,7 @@
   transform: scaleX(0);
   z-index: -1;
   transition: ease-in-out transform 0.2s;
+  font-weight: 800;
 }
 
 .navbar-list button:hover::after {

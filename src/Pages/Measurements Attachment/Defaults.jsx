@@ -18,7 +18,7 @@ export function Defaults() {
                 <img
                   src="./norotationkindright.png"
                   alt="No rotation kind right"
-                />
+                ></img>
               </div>
               <div className="defaultMeasurements">
                 <h2>KIND RIGHT</h2>
