@@ -13,6 +13,10 @@ function App() {
   const [valueY, setValueY] = useState(0);
   const [valueZ, setValueZ] = useState(0);
   const [checked, setChecked] = useState(false);
+  const [valueXFullMeasurements, setValueXFullMeasurements] = useState(0);
+  const [valueYFullMeasurements, setValueYFullMeasurements] = useState(0);
+  const [valueZFullMeasurements, setValueZFullMeasurements] = useState(0);
+  const [fullValue, setFullValue] = useState(" ");
   return (
     <div className="App">
       <FormContext.Provider
@@ -25,6 +29,14 @@ function App() {
           setValueZ,
           checked,
           setChecked,
+          valueXFullMeasurements,
+          setValueXFullMeasurements,
+          valueYFullMeasurements,
+          setValueYFullMeasurements,
+          valueZFullMeasurements,
+          setValueZFullMeasurements,
+          fullValue,
+          setFullValue,
         }}
       >
         <Router>

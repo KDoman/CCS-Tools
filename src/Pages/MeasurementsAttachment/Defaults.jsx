@@ -2,7 +2,8 @@ import { useContext } from "react";
 import { FormContext } from "../../App";
 
 export function Defaults() {
-  const { valueX, valueZ, checked } = useContext(FormContext);
+  const { valueX, valueZ, checked, valueXFullMeasurements } =
+    useContext(FormContext);
   return (
     <div>
       {!checked ? (
