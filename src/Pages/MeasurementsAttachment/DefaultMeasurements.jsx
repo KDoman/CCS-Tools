@@ -8,11 +8,14 @@ export function DefaultMeasurements() {
       <h1 className="h1DefaultMeasurements">Default measurements:</h1>
       <div className="measurementAttachmentResult">
         <div className="defaultMeasurements">
-          X: {(valueX * 2.54).toFixed(3)}
+          <span className="unselectable">X:</span>
+          {(valueX * 2.54).toFixed(3)}
           <br />
-          Y: {(valueY * 2.54).toFixed(3)}
+          <span className="unselectable">Y:</span>
+          {(valueY * 2.54).toFixed(3)}
           <br />
-          Z: {(valueZ * 2.54).toFixed(3)}
+          <span className="unselectable">Z:</span>
+          {(valueZ * 2.54).toFixed(3)}
           <br />
         </div>
       </div>

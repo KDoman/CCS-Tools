@@ -15,7 +15,7 @@
   gap: 5px;
 }
 .inputFullMeasurements {
-  padding: 0.5em 1em;
+  padding: 0.63em 1em;
 }
 .h1Enter,
 .h1Defaults,
@@ -96,4 +96,7 @@
 }
 .defaultsNoRotation {
   display: flex;
+}
+.unselectable {
+  user-select: none;
 }

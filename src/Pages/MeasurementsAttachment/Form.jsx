@@ -24,16 +24,23 @@ export function Form() {
 
   const arrMeasurementsSplit = fullValue.toLowerCase().split("x");
 
-  // condition
-
-  const findLetter = (array, letter) => {
+  const findLetter = (array, letter, val) => {
     array.forEach((word) => {
       if (word.includes(letter)) {
         const convertion = parseFloat(word);
-        setValueXFullMeasurements(convertion);
+        val(convertion);
       }
       return -1;
     });
+  };
+
+  const calculateMeasurements = () => {
+    findLetter(arrMeasurementsSplit, "w", setValueXFullMeasurements),
+      findLetter(arrMeasurementsSplit, "d", setValueZFullMeasurements),
+      findLetter(arrMeasurementsSplit, "h", setValueYFullMeasurements),
+      setValueX(valueXFullMeasurements);
+    setValueY(valueYFullMeasurements);
+    setValueZ(valueZFullMeasurements);
   };
 
   return (
@@ -49,10 +56,12 @@ export function Form() {
         className="inputFullMeasurements"
         onChange={(e) => setFullValue(e.target.value)}
       />
-      <button onClick={() => findLetter(arrMeasurementsSplit, "w")}>
+      <button className="calc-button" onClick={() => calculateMeasurements()}>
         Calculate
       </button>
-      {console.log(valueXFullMeasurements)}
+      <p>
+        <b>Double Click!</b>
+      </p>
       <div className="measurement-attachment-form-grid">
         <label className="labelX" htmlFor="attachmentX">
           W

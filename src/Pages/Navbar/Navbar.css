@@ -24,30 +24,36 @@
   color: black;
 }
 
-.navbar-list button {
+.navbar-list button,
+.calc-button {
   border: none;
-  background-color: rgba(109, 162, 236, 0.549);
+  background-color: rgba(109, 162, 236, 0.9);
   padding: 0.5em 1em;
   font-size: 1em;
-  transition: ease-in-out background-color 0.3s;
   position: relative;
+  cursor: pointer;
 }
-.navbar-list button::after {
+.navbar-list button::after,
+.calc-button::after {
   position: absolute;
+  border: 4px solid rgba(109, 162, 236, 0.549);
+  z-index: -1;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
   content: "";
-  width: 100%;
-  background-color: rgba(20, 177, 255, 0.85);
-  transform: scaleX(0);
-  z-index: -1;
-  transition: ease-in-out transform 0.2s;
-  font-weight: 800;
-  transform-origin: left;
+  transition: top 0.2s ease-in-out, right 0.2s ease-in-out,
+    bottom 0.2s ease-in-out, left 0.2s ease-in-out;
 }
 
-.navbar-list button:hover::after {
-  transform: scaleX(1);
+.navbar-list button:hover::after,
+.calc-button:hover::after {
+  top: -0.5em;
+  right: -0.5em;
+  bottom: -0.5em;
+  left: -0.5em;
+}
+.calc-button {
+  margin-left: 1em;
 }

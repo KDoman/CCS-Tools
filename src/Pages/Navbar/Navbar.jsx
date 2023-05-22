@@ -8,25 +8,19 @@ export function Navbar() {
       <div className="navbar-list">
         <ul>
           <li>
-            <button>
-              <Link className="link" to="/CCS-Tools/">
-                Home Page
-              </Link>
-            </button>
+            <Link className="link" to="/CCS-Tools/">
+              <button>Home Page</button>
+            </Link>
           </li>
           <li>
-            <button>
-              <Link className="link" to="/MeasurementAttachment/">
-                Measurement Attachment
-              </Link>
-            </button>
+            <Link className="link" to="/MeasurementAttachment/">
+              <button>Measurement Attachment</button>
+            </Link>
           </li>
           <li>
-            <button>
-              <Link className="link" to="/MeasurementPredicates/">
-                Measurement Predicates
-              </Link>
-            </button>
+            <Link className="link" to="/MeasurementPredicates/">
+              <button>Measurement Predicates</button>
+            </Link>
           </li>
         </ul>
       </div>
