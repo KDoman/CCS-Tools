@@ -27,7 +27,8 @@ export function Form() {
   const findLetter = (array, letter, val) => {
     array.forEach((word) => {
       if (word.includes(letter)) {
-        const convertion = parseFloat(word);
+        const match = word.match(/[\d\.]+/);
+        const convertion = parseFloat(match);
         val(convertion);
       }
       return -1;
