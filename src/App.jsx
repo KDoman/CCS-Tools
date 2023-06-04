@@ -5,6 +5,7 @@ import { HomePage } from "./Pages/HomePage/HomePage";
 import { MeasurementPredicates } from "./Pages/MeasurementPredicates/MeasurementPredicates";
 import { MeasurementsAttachment } from "./Pages/MeasurementsAttachment/MeasurementsAttachment";
 import { useState, createContext } from "react";
+import { IconsAndThumbnail } from "./Pages/IconsAndThumbnail/IconsAndThumbnail";
 
 export const FormContext = createContext();
 
@@ -51,6 +52,7 @@ function App() {
               path="/MeasurementPredicates/"
               element={<MeasurementPredicates />}
             />
+            <Route path="/IconsAndThumbnail/" element={<IconsAndThumbnail />} />
           </Routes>
         </Router>
       </FormContext.Provider>

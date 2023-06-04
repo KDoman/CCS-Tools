@@ -18,6 +18,16 @@ export function HomePage() {
           <h2 className="CardTitle">Measurement Attachment</h2>
         </div>
         <div className="homepage-card">
+          <Link to="/IconsAndThumbnail/">
+            <img
+              className="imgCard"
+              src="./Icon-thumbnail-renderer.png"
+              alt="Icon and Thumbnail img"
+            />
+          </Link>
+          <h2 className="CardTitle">Icon & Thumbnail</h2>
+        </div>
+        <div className="homepage-card">
           <Link to="/MeasurementPredicates/">
             <img
               className="imgCard"

@@ -18,6 +18,11 @@ export function Navbar() {
             </Link>
           </li>
           <li>
+            <Link className="link" to="/IconsAndThumbnail/">
+              <button>Icon & Thumbnail</button>
+            </Link>
+          </li>
+          <li>
             <Link className="link" to="/MeasurementPredicates/">
               <button>Measurement Predicates</button>
             </Link>

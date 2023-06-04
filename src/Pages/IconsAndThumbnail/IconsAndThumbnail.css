@@ -1,0 +1,37 @@
+.icon-div-container {
+  text-align: center;
+}
+
+input[type="file"] {
+  width: 350px;
+  max-width: 100%;
+  color: #444;
+  padding: 5px;
+  background: #fff;
+  border-radius: 10px;
+  border: 2px dashed rgba(109, 162, 236, 0.9);
+}
+
+.rendered-img-container {
+  display: flex;
+  max-width: 80%;
+  margin: 0 auto;
+  justify-content: space-evenly;
+  align-self: center;
+  margin-top: 8em;
+}
+.rendered-img-div {
+  padding: 1em;
+  display: grid;
+  place-items: center;
+}
+.rendered-img-div img {
+  width: 30px;
+}
+.download_button {
+  background-color: rgba(109, 162, 236, 0.9);
+  border: none;
+}
+.no-margin {
+  margin: 0;
+}
