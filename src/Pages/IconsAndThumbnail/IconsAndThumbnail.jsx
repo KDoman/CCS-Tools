@@ -106,7 +106,10 @@ export function IconsAndThumbnail() {
             onClick={() => downloadFileIcon(icon)}
             className="calc-button no-margin"
           >
-            <img src="../download.png" alt="download icon"></img>
+            <img
+              src="https://github.com/KDoman/CCS-Tools/blob/main/public/download.png?raw=true"
+              alt="download icon"
+            ></img>
             <p>Download Icon</p>
           </button>
         </div>
@@ -115,7 +118,10 @@ export function IconsAndThumbnail() {
             className="calc-button no-margin"
             onClick={() => downloadFileThumbnail(thumbnail)}
           >
-            <img src="../download.png" alt="download icon"></img>
+            <img
+              src="https://github.com/KDoman/CCS-Tools/blob/main/public/download.png?raw=true"
+              alt="download icon"
+            ></img>
             <p>Download Thumbnail</p>
           </button>
         </div>
