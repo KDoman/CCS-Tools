@@ -106,33 +106,35 @@ export function Crop() {
     <div className="Crop-container">
       <div className="Crop-Controls">
         <input type="file" accept="image/*" onChange={onSelectFile} />
-        <div>
-          <label htmlFor="scale-input">Scale: </label>
-          <input
-            id="scale-input"
-            type="range"
-            step="0.1"
-            min={1}
-            max={5}
-            value={scale}
-            disabled={!imgSrc}
-            onChange={(e) => setScale(Number(e.target.value))}
-          />
-        </div>
-        <div>
-          <label htmlFor="rotate-input">Rotate: </label>
-          <input
-            id="rotate-input"
-            type="range"
-            value={rotate}
-            min={0}
-            max={180}
-            step={6}
-            disabled={!imgSrc}
-            onChange={(e) =>
-              setRotate(Math.min(180, Math.max(-180, Number(e.target.value))))
-            }
-          />
+        <div className="crop-ranges-div">
+          <div>
+            <label htmlFor="scale-input">Scale: </label>
+            <input
+              id="scale-input"
+              type="range"
+              step="0.1"
+              min={1}
+              max={5}
+              value={scale}
+              disabled={!imgSrc}
+              onChange={(e) => setScale(Number(e.target.value))}
+            />
+          </div>
+          <div>
+            <label htmlFor="rotate-input">Rotate: </label>
+            <input
+              id="rotate-input"
+              type="range"
+              value={rotate}
+              min={0}
+              max={180}
+              step={6}
+              disabled={!imgSrc}
+              onChange={(e) =>
+                setRotate(Math.min(180, Math.max(-180, Number(e.target.value))))
+              }
+            />
+          </div>
         </div>
       </div>
       <div className="image-crop-container">
@@ -169,7 +171,10 @@ export function Crop() {
           )}
         </div>
       </div>
-      <button className="calc-button button-crop" onClick={onDownloadCropClick}>
+      <button
+        className="calc-button button-crop download-button"
+        onClick={onDownloadCropClick}
+      >
         <img src="../gear.png" className="crop-img-btn"></img>
         Set Image
       </button>

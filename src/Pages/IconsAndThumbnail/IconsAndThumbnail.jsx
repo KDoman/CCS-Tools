@@ -98,18 +98,12 @@ export function IconsAndThumbnail() {
   return (
     <div className="icon-div-container">
       <h1>Icon & Thumbnail generator</h1>
-      <input
-        type="file"
-        name="icon-render"
-        id="icon-render"
-        className="file-upload"
-        onChange={onChange}
-      />
+      <Crop />
       <div className="rendered-img-container">
         <div className="rendered-img-div">
           <button
             onClick={() => downloadFileIcon(icon)}
-            className="calc-button no-margin"
+            className="calc-button no-margin download-button"
           >
             <img
               src="https://github.com/KDoman/CCS-Tools/blob/main/public/download.png?raw=true"
@@ -120,7 +114,7 @@ export function IconsAndThumbnail() {
         </div>
         <div className="rendered-img-div">
           <button
-            className="calc-button no-margin"
+            className="calc-button"
             onClick={() => downloadFileThumbnail(thumbnail)}
           >
             <img
@@ -131,7 +125,6 @@ export function IconsAndThumbnail() {
           </button>
         </div>
       </div>
-      <Crop />
     </div>
   );
 }
