@@ -7,7 +7,7 @@ export function IconsAndThumbnail() {
   const [icon, setIcon] = useState({});
   const [thumbnail, setThumbnail] = useState({});
 
-  // @ts-ignore
+  //@ts-ignore
   const resizeFileToIcon = (file) =>
     new Promise((resolve) => {
       Resizer.imageFileResizer(
@@ -25,7 +25,8 @@ export function IconsAndThumbnail() {
         128
       );
     });
-  // @ts-ignore
+
+  //@ts-ignore
   const resizeFileToThumbnail = (file) =>
     new Promise((resolve) => {
       Resizer.imageFileResizer(
@@ -44,7 +45,7 @@ export function IconsAndThumbnail() {
       );
     });
 
-  // @ts-ignore
+  //@ts-ignore
   const downloadFileIcon = async (fileUri) => {
     const name = `${"Icon_128x128_" + (Math.random() * 1000000).toFixed(0)}`;
     try {
@@ -62,7 +63,7 @@ export function IconsAndThumbnail() {
     }
   };
 
-  // @ts-ignore
+  //@ts-ignore
   const downloadFileThumbnail = async (fileUri) => {
     const name = `${
       "Thumbnail_512x512_" + (Math.random() * 1000000).toFixed(0)
@@ -82,7 +83,7 @@ export function IconsAndThumbnail() {
     }
   };
 
-  // @ts-ignore
+  //@ts-ignore
   const onChange = async (event) => {
     try {
       const file = event.target.files;
@@ -103,7 +104,7 @@ export function IconsAndThumbnail() {
         <div className="rendered-img-div">
           <button
             onClick={() => downloadFileIcon(icon)}
-            className="calc-button no-margin download-button"
+            className="calc-button no-margin"
           >
             <img
               src="https://github.com/KDoman/CCS-Tools/blob/main/public/download.png?raw=true"
@@ -114,7 +115,7 @@ export function IconsAndThumbnail() {
         </div>
         <div className="rendered-img-div">
           <button
-            className="calc-button"
+            className="calc-button no-margin"
             onClick={() => downloadFileThumbnail(thumbnail)}
           >
             <img
