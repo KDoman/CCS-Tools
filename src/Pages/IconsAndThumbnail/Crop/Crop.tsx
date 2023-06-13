@@ -32,7 +32,7 @@ function centerAspectCrop(
     mediaHeight
   );
 }
-
+//@ts-ignore
 export function Crop() {
   const [imgSrc, setImgSrc] = useState("");
   const previewCanvasRef = useRef<HTMLCanvasElement>(null);
@@ -120,7 +120,7 @@ export function Crop() {
               onChange={(e) => setScale(Number(e.target.value))}
             />
           </div>
-          <div>
+          <div className="rotate-input-div">
             <label htmlFor="rotate-input">Rotate: </label>
             <input
               id="rotate-input"
@@ -128,12 +128,20 @@ export function Crop() {
               value={rotate}
               min={0}
               max={180}
-              step={6}
+              step={45}
               disabled={!imgSrc}
               onChange={(e) =>
                 setRotate(Math.min(180, Math.max(-180, Number(e.target.value))))
               }
+              list="markers"
             />
+            <datalist id="markers">
+              <option value="0" label="0"></option>
+              <option value="45" label="45"></option>
+              <option value="90" label="90"></option>
+              <option value="135" label="135"></option>
+              <option value="180" label="180"></option>
+            </datalist>
           </div>
         </div>
       </div>
