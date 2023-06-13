@@ -35,3 +35,19 @@ input[type="file"] {
 .no-margin {
   margin: 0;
 }
+.crop-img {
+  width: 400px;
+}
+.image-crop-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.button-crop {
+  margin-top: 2em;
+}
+.crop-img-btn {
+  width: 30px;
+  display: block;
+  margin: 0 auto;
+}
