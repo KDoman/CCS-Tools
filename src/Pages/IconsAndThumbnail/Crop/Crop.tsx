@@ -183,7 +183,10 @@ export function Crop() {
         className="calc-button button-crop download-button"
         onClick={onDownloadCropClick}
       >
-        <img src="../gear.png" className="crop-img-btn"></img>
+        <img
+          src="https://github.com/KDoman/CCS-Tools/blob/main/public/gear.png?raw=true"
+          className="crop-img-btn"
+        ></img>
         Set Image
       </button>
       <a
