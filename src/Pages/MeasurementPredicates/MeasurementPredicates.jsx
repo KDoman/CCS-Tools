@@ -7,7 +7,7 @@ export function MeasurementPredicates() {
   const [text, setText] = useState("");
 
   const addRow = () => {
-    setRowArray(rowArray, text);
+    setRowArray(rowArray);
   };
 
   return (

@@ -1,11 +1,13 @@
 import { useState } from "react";
 import "./IconsAndThumbnail.css";
 import Resizer from "react-image-file-resizer";
+import { Crop } from "./Crop/Crop";
 
 export function IconsAndThumbnail() {
   const [icon, setIcon] = useState({});
   const [thumbnail, setThumbnail] = useState({});
 
+  //@ts-ignore
   const resizeFileToIcon = (file) =>
     new Promise((resolve) => {
       Resizer.imageFileResizer(
@@ -24,6 +26,7 @@ export function IconsAndThumbnail() {
       );
     });
 
+  //@ts-ignore
   const resizeFileToThumbnail = (file) =>
     new Promise((resolve) => {
       Resizer.imageFileResizer(
@@ -42,6 +45,7 @@ export function IconsAndThumbnail() {
       );
     });
 
+  //@ts-ignore
   const downloadFileIcon = async (fileUri) => {
     const name = `${"Icon_128x128_" + (Math.random() * 1000000).toFixed(0)}`;
     try {
@@ -59,6 +63,7 @@ export function IconsAndThumbnail() {
     }
   };
 
+  //@ts-ignore
   const downloadFileThumbnail = async (fileUri) => {
     const name = `${
       "Thumbnail_512x512_" + (Math.random() * 1000000).toFixed(0)
@@ -78,6 +83,7 @@ export function IconsAndThumbnail() {
     }
   };
 
+  //@ts-ignore
   const onChange = async (event) => {
     try {
       const file = event.target.files;
@@ -93,13 +99,7 @@ export function IconsAndThumbnail() {
   return (
     <div className="icon-div-container">
       <h1>Icon & Thumbnail generator</h1>
-      <input
-        type="file"
-        name="icon-render"
-        id="icon-render"
-        className="file-upload"
-        onChange={onChange}
-      />
+      <Crop />
       <div className="rendered-img-container">
         <div className="rendered-img-div">
           <button
