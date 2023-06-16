@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 
 import ReactCrop, {
   centerCrop,
@@ -12,6 +12,8 @@ import { useDebounceEffect } from "../../../../node_modules/react-image-crop/src
 import "../../../../node_modules/react-image-crop/src/ReactCrop.scss";
 import "../../../../node_modules/react-image-crop/src/demo/index.scss";
 import "../IconsAndThumbnail.css";
+import Resizer from "react-image-file-resizer";
+import { FormContext } from "../../../App";
 
 function centerAspectCrop(
   mediaWidth: number,
@@ -34,6 +36,8 @@ function centerAspectCrop(
 }
 //@ts-ignore
 export function Crop() {
+  const { setIcon, setThumbnail } = useContext(FormContext);
+
   const [imgSrc, setImgSrc] = useState("");
   const previewCanvasRef = useRef<HTMLCanvasElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
@@ -63,6 +67,44 @@ export function Crop() {
     }
   }
 
+  //@ts-ignore
+  const resizeFileToIcon = (file) =>
+    new Promise((resolve) => {
+      Resizer.imageFileResizer(
+        file,
+        128,
+        128,
+        "PNG",
+        100,
+        0,
+        (uri) => {
+          resolve(uri);
+        },
+        "base64",
+        128,
+        128
+      );
+    });
+
+  //@ts-ignore
+  const resizeFileToThumbnail = (file) =>
+    new Promise((resolve) => {
+      Resizer.imageFileResizer(
+        file,
+        512,
+        512,
+        "PNG",
+        100,
+        0,
+        (uri) => {
+          resolve(uri);
+        },
+        "base64",
+        512,
+        512
+      );
+    });
+
   function onDownloadCropClick() {
     if (!previewCanvasRef.current) {
       throw new Error("Crop canvas does not exist");
@@ -76,8 +118,15 @@ export function Crop() {
         URL.revokeObjectURL(blobUrlRef.current);
       }
       blobUrlRef.current = URL.createObjectURL(blob);
-      hiddenAnchorRef.current!.href = blobUrlRef.current;
-      hiddenAnchorRef.current!.click();
+      const test = new Image();
+      test.src = blobUrlRef.current;
+      console.log(test);
+
+      const newBlob = new Blob([test.src], { type: "image/png" });
+      const imageThumbnail = resizeFileToThumbnail(newBlob);
+      const imageIcon = resizeFileToIcon(newBlob);
+      setIcon(imageIcon);
+      setThumbnail(imageThumbnail);
     });
   }
 

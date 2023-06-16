@@ -18,6 +18,8 @@ function App() {
   const [valueYFullMeasurements, setValueYFullMeasurements] = useState(0);
   const [valueZFullMeasurements, setValueZFullMeasurements] = useState(0);
   const [fullValue, setFullValue] = useState(" ");
+  const [icon, setIcon] = useState({});
+  const [thumbnail, setThumbnail] = useState({});
   return (
     <div className="App">
       <FormContext.Provider
@@ -38,6 +40,10 @@ function App() {
           setValueZFullMeasurements,
           fullValue,
           setFullValue,
+          icon,
+          setIcon,
+          thumbnail,
+          setThumbnail,
         }}
       >
         <Router>
