@@ -36,7 +36,7 @@ function centerAspectCrop(
 }
 //@ts-ignore
 export function Crop() {
-  const { setIcon, setThumbnail } = useContext(FormContext);
+  const { setIcon, setThumbnail, icon } = useContext(FormContext);
 
   const [imgSrc, setImgSrc] = useState("");
   const previewCanvasRef = useRef<HTMLCanvasElement>(null);
@@ -118,15 +118,12 @@ export function Crop() {
         URL.revokeObjectURL(blobUrlRef.current);
       }
       blobUrlRef.current = URL.createObjectURL(blob);
-      const test = new Image();
-      test.src = blobUrlRef.current;
-      console.log(test);
-
-      const newBlob = new Blob([test.src], { type: "image/png" });
-      const imageThumbnail = resizeFileToThumbnail(newBlob);
-      const imageIcon = resizeFileToIcon(newBlob);
-      setIcon(imageIcon);
-      setThumbnail(imageThumbnail);
+      hiddenAnchorRef.current!.href = blobUrlRef.current;
+      // converting href (string) to Blob
+      const str = hiddenAnchorRef.current?.href;
+      const testBlob = new Blob([str], { type: "image/png" });
+      setIcon(resizeFileToIcon(testBlob));
+      setThumbnail(resizeFileToThumbnail(testBlob));
     });
   }
 
