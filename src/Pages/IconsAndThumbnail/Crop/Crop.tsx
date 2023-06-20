@@ -117,13 +117,15 @@ export function Crop() {
       if (blobUrlRef.current) {
         URL.revokeObjectURL(blobUrlRef.current);
       }
-      blobUrlRef.current = URL.createObjectURL(blob);
-      hiddenAnchorRef.current!.href = blobUrlRef.current;
-      // converting href (string) to Blob
-      const str = hiddenAnchorRef.current?.href;
-      const testBlob = new Blob([str], { type: "image/png" });
-      setIcon(resizeFileToIcon(testBlob));
-      setThumbnail(resizeFileToThumbnail(testBlob));
+      const canvasURL: string =
+        previewCanvasRef.current?.toDataURL("image/png")!;
+      const newImg = new Image();
+      newImg.src = canvasURL;
+      const blobTest = new Blob([newImg], { type: "image/png" });
+      const newIcon = resizeFileToIcon(newImg);
+      const newThumb = resizeFileToThumbnail(newImg);
+      setIcon(newIcon);
+      setThumbnail(newThumb);
     });
   }
 
