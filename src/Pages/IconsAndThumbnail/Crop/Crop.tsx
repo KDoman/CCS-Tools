@@ -36,7 +36,7 @@ function centerAspectCrop(
 }
 //@ts-ignore
 export function Crop() {
-  const { setIcon, setThumbnail, icon } = useContext(FormContext);
+  // const { setIcon, setThumbnail } = useContext(FormContext);
 
   const [imgSrc, setImgSrc] = useState("");
   const previewCanvasRef = useRef<HTMLCanvasElement>(null);
@@ -48,6 +48,8 @@ export function Crop() {
   const [scale, setScale] = useState(1);
   const [rotate, setRotate] = useState(0);
   const [aspect, setAspect] = useState<number | undefined>(1);
+  const [icon, setIcon] = useState({});
+  const [thumbnail, setThumbnail] = useState({});
 
   function onSelectFile(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.files && e.target.files.length > 0) {
@@ -117,15 +119,17 @@ export function Crop() {
       if (blobUrlRef.current) {
         URL.revokeObjectURL(blobUrlRef.current);
       }
-      const canvasURL: string =
-        previewCanvasRef.current?.toDataURL("image/png")!;
+      const canvasURL: string = previewCanvasRef.current?.toDataURL()!;
       const newImg = new Image();
       newImg.src = canvasURL;
-      const blobTest = new Blob([newImg], { type: "image/png" });
-      const newIcon = resizeFileToIcon(newImg);
-      const newThumb = resizeFileToThumbnail(newImg);
-      setIcon(newIcon);
-      setThumbnail(newThumb);
+      const blobTest = new File([newImg.src], "test.png", {
+        type: "image/png",
+      });
+      console.log(blobTest);
+      const newIcon = resizeFileToIcon(blobTest);
+      const newThumb = resizeFileToThumbnail(blobTest);
+      setIcon(newIcon!);
+      setThumbnail(newThumb!);
     });
   }
 
@@ -149,6 +153,41 @@ export function Crop() {
     100,
     [completedCrop, scale, rotate]
   );
+  //@ts-ignore
+  const downloadFileIcon = async (fileUri) => {
+    const name = `${"Icon_128x128_" + (Math.random() * 1000000).toFixed(0)}`;
+    try {
+      const response = await fetch(fileUri);
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = name;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error("Wystąpił błąd podczas pobierania pliku:", error);
+    }
+  };
+
+  //@ts-ignore
+  const downloadFileThumbnail = async (fileUri) => {
+    const name = `${"Icon_512x512_" + (Math.random() * 1000000).toFixed(0)}`;
+    try {
+      const response = await fetch(fileUri);
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = name;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error("Wystąpił błąd podczas pobierania pliku:", error);
+    }
+  };
 
   return (
     <div className="Crop-container">
@@ -246,6 +285,8 @@ export function Crop() {
           visibility: "hidden",
         }}
       ></a>
+      <button onClick={() => downloadFileIcon(icon)}>Icon</button>
+      <button onClick={() => downloadFileThumbnail(thumbnail)}>Thumb</button>
     </div>
   );
 }
