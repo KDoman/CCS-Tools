@@ -26,7 +26,9 @@ export function IconsAndThumbnail() {
 
   //@ts-ignore
   const downloadFileThumbnail = async (fileUri) => {
-    const name = `${"Icon_512x512_" + (Math.random() * 1000000).toFixed(0)}`;
+    const name = `${
+      "Thumbnail_512x512_" + (Math.random() * 1000000).toFixed(0)
+    }`;
     try {
       const response = await fetch(fileUri);
       const blob = await response.blob();

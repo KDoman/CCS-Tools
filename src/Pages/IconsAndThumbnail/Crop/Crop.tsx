@@ -105,7 +105,7 @@ export function Crop() {
       );
     });
 
-  function onDownloadCropClick() {
+  function setCropImage() {
     if (!previewCanvasRef.current) {
       throw new Error("Crop canvas does not exist");
     }
@@ -122,8 +122,10 @@ export function Crop() {
         .then((res) => res.blob())
         .then((blob) => {
           const file = new File([blob], "image", { type: blob.type });
+          resizeFileToThumbnail(file).then((res) => {
+            setThumbnail(res);
+          });
           resizeFileToIcon(file).then((res) => setIcon(res));
-          resizeFileToThumbnail(file).then((res) => setThumbnail(res));
         });
     });
   }
@@ -228,7 +230,7 @@ export function Crop() {
       </div>
       <button
         className="calc-button button-crop download-button"
-        onClick={onDownloadCropClick}
+        onClick={setCropImage}
       >
         <img
           src="https://github.com/KDoman/CCS-Tools/blob/main/public/gear.png?raw=true"
