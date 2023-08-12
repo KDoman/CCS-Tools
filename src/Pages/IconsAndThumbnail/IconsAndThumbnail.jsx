@@ -56,7 +56,7 @@ export function IconsAndThumbnail() {
               src="https://github.com/KDoman/CCS-Tools/blob/main/public/download.png?raw=true"
               alt="download icon"
             ></img>
-            <p>Download Icon</p>
+            <p>128 x 128</p>
           </button>
         </div>
         <div className="rendered-img-div">
@@ -68,7 +68,7 @@ export function IconsAndThumbnail() {
               src="https://github.com/KDoman/CCS-Tools/blob/main/public/download.png?raw=true"
               alt="download icon"
             ></img>
-            <p>Download Thumbnail</p>
+            <p>512 x 512</p>
           </button>
         </div>
       </div>
