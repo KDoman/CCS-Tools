@@ -107,7 +107,7 @@ export function Crop() {
 
   function setCropImage() {
     if (!previewCanvasRef.current) {
-      throw new Error("Crop canvas does not exist");
+      throw new Error("Select file!");
     }
 
     previewCanvasRef.current.toBlob((blob) => {
@@ -118,6 +118,7 @@ export function Crop() {
         URL.revokeObjectURL(blobUrlRef.current);
       }
       const canvasURL: string = previewCanvasRef.current?.toDataURL()!;
+
       fetch(canvasURL)
         .then((res) => res.blob())
         .then((blob) => {
@@ -126,7 +127,8 @@ export function Crop() {
             setThumbnail(res);
           });
           resizeFileToIcon(file).then((res) => setIcon(res));
-        });
+        })
+        .catch((err) => console.log(err));
     });
   }
 
