@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { FormContext } from "../../App";
+import { Button, Chip, Input, Switch } from "@nextui-org/react";
 
 export function Form() {
   const {
@@ -31,7 +32,7 @@ export function Form() {
         const convertion = parseFloat(match);
         val(convertion);
       }
-      return -1;
+      return;
     });
   };
 
@@ -45,69 +46,72 @@ export function Form() {
   };
 
   return (
-    <div className="measurement-attachment-form-container">
-      <label className="labelFullMeasurements" htmlFor="fullMeasurements">
-        Full Measurements
-      </label>
-      <input
-        type="text"
-        placeholder="W x D x H"
-        name="fullMeasurements"
-        id="fullMeasurements"
-        className="inputFullMeasurements"
-        onChange={(e) => setFullValue(e.target.value)}
-      />
-      <button className="calc-button" onClick={() => calculateMeasurements()}>
-        Calculate
-      </button>
-      <p>
-        <b>Double Click!</b>
-      </p>
-      <div className="measurement-attachment-form-grid">
-        <label className="labelX" htmlFor="attachmentX">
-          W
-        </label>
-        <input
+    <div className="text-center">
+      <div className="flex justify-center items-center">
+        <Input
+          type="text"
+          label="Full Measurements"
+          onChange={(e) => setFullValue(e.target.value)}
+          className="max-w-xs my-5 inline-block mr-5"
+          name="fullMeasurements"
+          id="fullMeasurements"
+          placeholder=""
+        />
+        <Button
+          color="primary"
+          variant="ghost"
+          onClick={() => calculateMeasurements()}
+          className=""
+        >
+          Calculate
+        </Button>
+        <b className="ml-2">Double Click!</b>
+      </div>
+      <>
+        <Chip
+          className="text-lg md:text-3xl mt-10 py-5"
+          variant="dot"
+          color="primary"
+        >
+          Manual measurements
+        </Chip>
+        <p className="text-center text-md mt-2 md:text-lg">(Optional)</p>
+        <Input
+          label="W"
           type="number"
           name="attachmentX"
           id="attachmentX"
-          placeholder="..."
-          className="inputX"
+          className="max-w-xs mx-auto mt-2"
           onChange={(e) => setValueX(e.target.value)}
         />
-        <label className="labelY" htmlFor="attachmentY">
-          H
-        </label>
-        <input
+
+        <Input
+          label="H"
           type="number"
           name="attachmentY"
           id="attachmentY"
-          placeholder="..."
-          className="inputY"
+          className="max-w-xs mx-auto mt-10"
           onChange={(e) => setValueY(e.target.value)}
         />
 
-        <label className="labelZ" htmlFor="attachmentZ">
-          D
-        </label>
-        <input
+        <Input
+          label="D"
           type="number"
           name="attachmentZ"
           id="attachmentZ"
-          placeholder="..."
-          className="inputZ"
+          className="max-w-xs mx-auto my-10"
           onChange={(e) => setValueZ(e.target.value)}
         />
-        <label htmlFor="checkBoxRotation">
-          <b>Rotation?</b>
+        <label htmlFor="checkBoxRotation" className="mr-5">
+          <b>ROTATION</b>
         </label>
-        <input
+        <Switch
           onChange={showDefaulsRotation}
-          type="checkbox"
+          size="lg"
           name="checkBoxRotation"
           id="checkBoxRotation"
         />
-      </div>
+      </>
     </div>
   );
 }
