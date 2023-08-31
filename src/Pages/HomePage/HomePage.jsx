@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import "./HomePage.css";
+import { Checkbox } from "@nextui-org/react";
+import { Button } from "react-bootstrap";
 
 export function HomePage() {
   return (

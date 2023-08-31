@@ -6,6 +6,7 @@ import { MeasurementPredicates } from "./Pages/MeasurementPredicates/Measurement
 import { MeasurementsAttachment } from "./Pages/MeasurementsAttachment/MeasurementsAttachment";
 import { useState, createContext } from "react";
 import { IconsAndThumbnail } from "./Pages/IconsAndThumbnail/IconsAndThumbnail";
+import { NextUIProvider } from "@nextui-org/react";
 
 export const FormContext = createContext();
 
@@ -21,48 +22,53 @@ function App() {
   const [icon, setIcon] = useState({});
   const [thumbnail, setThumbnail] = useState({});
   return (
-    <div className="App">
-      <FormContext.Provider
-        value={{
-          valueX,
-          setValueX,
-          valueY,
-          setValueY,
-          valueZ,
-          setValueZ,
-          checked,
-          setChecked,
-          valueXFullMeasurements,
-          setValueXFullMeasurements,
-          valueYFullMeasurements,
-          setValueYFullMeasurements,
-          valueZFullMeasurements,
-          setValueZFullMeasurements,
-          fullValue,
-          setFullValue,
-          icon,
-          setIcon,
-          thumbnail,
-          setThumbnail,
-        }}
-      >
-        <Router>
-          <Navbar />
-          <Routes>
-            <Route path="/CCS-Tools/" element={<HomePage />} />
-            <Route
-              path="/MeasurementAttachment/"
-              element={<MeasurementsAttachment />}
-            />
-            <Route
-              path="/MeasurementPredicates/"
-              element={<MeasurementPredicates />}
-            />
-            <Route path="/IconsAndThumbnail/" element={<IconsAndThumbnail />} />
-          </Routes>
-        </Router>
-      </FormContext.Provider>
-    </div>
+    <NextUIProvider>
+      <div className="App">
+        <FormContext.Provider
+          value={{
+            valueX,
+            setValueX,
+            valueY,
+            setValueY,
+            valueZ,
+            setValueZ,
+            checked,
+            setChecked,
+            valueXFullMeasurements,
+            setValueXFullMeasurements,
+            valueYFullMeasurements,
+            setValueYFullMeasurements,
+            valueZFullMeasurements,
+            setValueZFullMeasurements,
+            fullValue,
+            setFullValue,
+            icon,
+            setIcon,
+            thumbnail,
+            setThumbnail,
+          }}
+        >
+          <Router>
+            <Navbar />
+            <Routes>
+              <Route path="/CCS-Tools/" element={<HomePage />} />
+              <Route
+                path="/MeasurementAttachment/"
+                element={<MeasurementsAttachment />}
+              />
+              <Route
+                path="/MeasurementPredicates/"
+                element={<MeasurementPredicates />}
+              />
+              <Route
+                path="/IconsAndThumbnail/"
+                element={<IconsAndThumbnail />}
+              />
+            </Routes>
+          </Router>
+        </FormContext.Provider>
+      </div>
+    </NextUIProvider>
   );
 }
 
