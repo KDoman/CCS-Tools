@@ -1,49 +1,55 @@
+import {
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Chip,
+  Image,
+} from "@nextui-org/react";
 import { Link } from "react-router-dom";
-import "./HomePage.css";
-import { Checkbox } from "@nextui-org/react";
-import { Button } from "react-bootstrap";
 
 export function HomePage() {
   return (
-    <div className="homepage-intro">
-      <h1 className="homepage-title"> CCS TOOL PAGE </h1>
-
-      <div className="homapage-card-container">
-        <div className="homepage-card">
-          <Link to="/MeasurementAttachment/">
-            <img
-              className="imgCard"
-              src="./measurement-attachment-card.png"
-              alt="Measurement Attachmend Card img"
-            />
-          </Link>
-          <h2 className="CardTitle">Measurement Attachment</h2>
-        </div>
-        <div className="homepage-card">
-          <Link to="/IconsAndThumbnail/">
-            <img
-              className="imgCard"
-              src="./Icon-thumbnail-renderer.png"
-              alt="Icon and Thumbnail img"
-            />
-          </Link>
-          <h2 className="CardTitle">Icon & Thumbnail</h2>
-        </div>
-        <div className="homepage-card">
-          <Link to="/MeasurementPredicates/">
-            <img
-              className="imgCard"
-              src="./in-progress.png"
-              alt="Measurement Attachmend Card img"
-            />
-          </Link>
-          <h2 className="CardTitle">
-            Measurement Predicates <br />
-            <sub>
-              <i>(In progress)</i>
-            </sub>
-          </h2>
-        </div>
+    <div className="ml-24 min-h-screen flex flex-col  justify-evenly">
+      <div className="flex flex-col items-center">
+        <Link to="/MeasurementAttachment/">
+          <Card className=" bg-primary">
+            <CardBody className="overflow-visible p-0 ">
+              <Image
+                src="./measurement-attachment-card.png"
+                alt="Measurement Attachmend Card img"
+                width={400}
+                isZoomed
+                className="w-full object-cover"
+              ></Image>
+            </CardBody>
+            <CardFooter className="text-small justify-between">
+              <p className="font-bold text-large text-zinc-50">
+                Measurement Attachment
+              </p>
+            </CardFooter>
+          </Card>
+        </Link>
+      </div>
+      <div className="flex flex-col items-center">
+        <Link to="/IconsAndThumbnail/">
+          <Card className=" bg-primary">
+            <CardBody className="overflow-visible p-0 ">
+              <Image
+                src="./Icon-thumbnail-renderer.png"
+                alt="Icon and Thumbnail img"
+                width={400}
+                isZoomed
+                className="w-full object-cover"
+              ></Image>
+            </CardBody>
+            <CardFooter className="text-small justify-between">
+              <p className="font-bold text-large text-zinc-50">
+                Icon & Thumbnail generator
+              </p>
+            </CardFooter>
+          </Card>
+        </Link>
       </div>
     </div>
   );
