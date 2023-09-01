@@ -1,24 +1,36 @@
 import { useContext } from "react";
 import { FormContext } from "../../App";
-import { Chip, Image, Snippet } from "@nextui-org/react";
+import { Chip, Image, Snippet, Switch } from "@nextui-org/react";
 
 export function Defaults() {
-  const { valueX, valueZ, checked } = useContext(FormContext);
+  const { valueX, valueZ, checked, setChecked } = useContext(FormContext);
+  const showDefaulsRotation = () => {
+    setChecked(!checked);
+  };
   return (
     <div>
+      <div className="flex justify-center items-center mt-10 mb-5">
+        <p className="mr-4 font-semibold">ROTATION</p>
+        <Switch
+          onChange={showDefaulsRotation}
+          size="lg"
+          name="checkBoxRotation"
+          id="checkBoxRotation"
+        />
+      </div>
       {!checked ? (
         // NO ROTATION
         <>
           <Chip
             color="primary"
-            className="text-lg md:text-3xl mt-20 mx-auto flex py-5"
-            variant="dot"
+            className="text-lg md:text-xl mx-auto flex py-5 rounded-xl"
+            variant="bordered"
           >
             Defaults (no rotation)
           </Chip>
           <Chip
-            className="flex mx-auto mt-2 text-sm md:text-xl"
-            variant="faded"
+            className="flex mx-auto mt-2 text-sm md:text-md rounded-md"
+            variant="flat"
             color="primary"
           >
             position in which the furniture is displayed
@@ -31,9 +43,9 @@ export function Defaults() {
                   alt="No rotation kind right"
                 ></Image>
               </div>
-              <div className="-ml-4">
+              <div className="">
                 <Chip
-                  className="text-sm md:text-lg mb-2"
+                  className="text-sm md:text-lg mb-2 rounded-lg"
                   color="primary"
                   variant="bordered"
                 >
@@ -61,9 +73,9 @@ export function Defaults() {
                   alt="No rotation kind left"
                 />
               </div>
-              <div>
+              <div className="mr-4">
                 <Chip
-                  className="text-sm md:text-lg mb-2 float-right"
+                  className="text-sm md:text-lg mb-2 float-right rounded-lg"
                   color="primary"
                   variant="bordered"
                 >
@@ -90,14 +102,14 @@ export function Defaults() {
         <>
           <Chip
             color="primary"
-            className="text-lg md:text-3xl  mt-20 mx-auto flex py-5"
-            variant="dot"
+            className="text-lg md:text-xl mx-auto flex py-5 rounded-xl"
+            variant="bordered"
           >
             Defaults (rotation)
           </Chip>
           <Chip
-            className="flex mx-auto mt-2 text-sm md:text-xl"
-            variant="faded"
+            className="flex mx-auto mt-2 text-sm md:text-md rounded-md"
+            variant="flat"
             color="primary"
           >
             position in which the furniture is displayed
@@ -112,7 +124,7 @@ export function Defaults() {
               </div>
               <div className="mt-10 ml-2">
                 <Chip
-                  className="text-sm md:text-lg mb-2"
+                  className="text-sm md:text-lg mb-2 rounded-lg"
                   color="primary"
                   variant="bordered"
                 >
@@ -133,7 +145,7 @@ export function Defaults() {
               </div>
               <div className="mt-2 ml-2">
                 <Chip
-                  className="text-sm md:text-lg mb-2"
+                  className="text-sm md:text-lg mb-2 rounded-lg"
                   color="primary"
                   variant="bordered"
                 >
@@ -162,7 +174,7 @@ export function Defaults() {
               </div>
               <div className="mt-10 row-start-1 col-start-1 ml-auto mr-2">
                 <Chip
-                  className="text-sm md:text-lg mb-2 float-right"
+                  className="text-sm md:text-lg mb-2 float-right rounded-lg"
                   color="primary"
                   variant="bordered"
                 >
@@ -176,14 +188,14 @@ export function Defaults() {
                     variant="solid"
                     color="primary"
                   >
-                    {((valueZ * 2.54) / -2).toFixed(3)}
+                    {((valueX * 2.54) / 2).toFixed(3)}
                   </Snippet>
-                  <Chip color="primary">Z</Chip>
+                  <Chip color="primary">X</Chip>
                 </div>
               </div>
               <div className="mt-2 row-start-2 col-start-1 ml-auto mr-2">
                 <Chip
-                  className="text-sm md:text-lg mb-2 float-right"
+                  className="text-sm md:text-lg mb-2 float-right rounded-lg"
                   color="primary"
                   variant="bordered"
                 >
@@ -197,9 +209,9 @@ export function Defaults() {
                     variant="solid"
                     color="primary"
                   >
-                    {((valueX * 2.54) / -2).toFixed(3)}
+                    {((valueZ * 2.54) / -2).toFixed(3)}
                   </Snippet>
-                  <Chip color="primary">X</Chip>
+                  <Chip color="primary">Z</Chip>
                 </div>
               </div>
             </div>

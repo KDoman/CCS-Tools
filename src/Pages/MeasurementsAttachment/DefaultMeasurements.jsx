@@ -7,11 +7,11 @@ export function DefaultMeasurements() {
   return (
     <div>
       <Chip
-        className="mx-auto flex py-5 text-lg md:text-3xl mt-10"
+        className="mx-auto flex py-5 text-lg md:text-xl mt-10  rounded-xl"
         color="primary"
-        variant="dot"
+        variant="bordered"
       >
-        Default measurements:
+        Default measurements
       </Chip>
       <div className="flex justify-center">
         <div className="my-5">
