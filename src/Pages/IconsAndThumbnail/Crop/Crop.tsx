@@ -6,7 +6,7 @@ import ReactCrop, {
   Crop,
   PixelCrop,
 } from "../../../../node_modules/react-image-crop/dist";
-import { canvasPreview } from "../../../../node_modules/react-image-crop/src/demo/canvasPreview";
+import { canvasPreview } from "./CanvasPrev";
 import { useDebounceEffect } from "../../../../node_modules/react-image-crop/src/demo/useDebounceEffect";
 
 import "../../../../node_modules/react-image-crop/src/ReactCrop.scss";
