@@ -229,6 +229,7 @@ export function Crop() {
                 objectFit: "contain",
                 width: completedCrop.width,
                 height: completedCrop.height,
+                background: "#fff",
               }}
             />
           )}
