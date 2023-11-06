@@ -11,7 +11,11 @@
     "strict": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "baseUrl": "./",
+    "paths": {
+      "nodePath/*": ["../node_modules/*"]
+    }
   },
   "include": ["src"]
 }

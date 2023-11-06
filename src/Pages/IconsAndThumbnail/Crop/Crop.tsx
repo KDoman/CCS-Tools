@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useRef } from "react";
 
 import ReactCrop, {
   centerCrop,
@@ -12,8 +12,12 @@ import { useDebounceEffect } from "../../../../node_modules/react-image-crop/src
 import "../../../../node_modules/react-image-crop/src/ReactCrop.scss";
 import "../../../../node_modules/react-image-crop/src/demo/index.scss";
 import Resizer from "react-image-file-resizer";
-import { FormContext } from "../../../App";
 import { Button } from "@nextui-org/react";
+
+interface Props {
+  setThumbnail: (value: string) => void;
+  setIcon: (value: string) => void;
+}
 
 function centerAspectCrop(
   mediaWidth: number,
@@ -35,19 +39,17 @@ function centerAspectCrop(
   );
 }
 //@ts-ignore
-export function Crop() {
-  const { setIcon, setThumbnail } = useContext(FormContext);
-
-  const [imgSrc, setImgSrc] = useState("");
-  const previewCanvasRef = useRef<HTMLCanvasElement>(null);
-  const imgRef = useRef<HTMLImageElement>(null);
-  const [crop, setCrop] = useState<Crop>();
-  const hiddenAnchorRef = useRef<HTMLAnchorElement>(null);
+export function Crop({ setThumbnail, setIcon }: Props) {
+  const aspect: number = 1;
   const blobUrlRef = useRef("");
   const [completedCrop, setCompletedCrop] = useState<PixelCrop>();
+  const [crop, setCrop] = useState<Crop>();
+  const [imgSrc, setImgSrc] = useState("");
+  const imgRef = useRef<HTMLImageElement>(null);
+  const previewCanvasRef = useRef<HTMLCanvasElement>(null);
   const [scale, setScale] = useState(1);
-  const [rotate, setRotate] = useState(0);
-  const [aspect, setAspect] = useState<number | undefined>(1);
+  // feature rotate option (in case if needed)
+  // const [rotate, setRotate] = useState<number>(0);
 
   function onSelectFile(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.files && e.target.files.length > 0) {
@@ -61,14 +63,11 @@ export function Crop() {
   }
 
   function onImageLoad(e: React.SyntheticEvent<HTMLImageElement>) {
-    if (aspect) {
-      const { width, height } = e.currentTarget;
-      setCrop(centerAspectCrop(width, height, aspect));
-    }
+    const { width, height } = e.currentTarget;
+    setCrop(centerAspectCrop(width, height, aspect));
   }
 
-  //@ts-ignore
-  const resizeFileToIcon = (file) =>
+  const resizeFileToIcon = (file: Blob) =>
     new Promise((resolve) => {
       Resizer.imageFileResizer(
         file,
@@ -86,8 +85,7 @@ export function Crop() {
       );
     });
 
-  //@ts-ignore
-  const resizeFileToThumbnail = (file) =>
+  const resizeFileToThumbnail = (file: Blob) =>
     new Promise((resolve) => {
       Resizer.imageFileResizer(
         file,
@@ -117,18 +115,24 @@ export function Crop() {
       if (blobUrlRef.current) {
         URL.revokeObjectURL(blobUrlRef.current);
       }
-      const canvasURL: string = previewCanvasRef.current?.toDataURL()!;
 
-      fetch(canvasURL)
-        .then((res) => res.blob())
-        .then((blob) => {
-          const file = new File([blob], "image", { type: blob.type });
-          resizeFileToThumbnail(file).then((res) => {
-            setThumbnail(res);
-          });
-          resizeFileToIcon(file).then((res) => setIcon(res));
-        })
-        .catch((err) => console.log(err));
+      const canvasURL = previewCanvasRef.current?.toDataURL();
+
+      if (canvasURL)
+        fetch(canvasURL)
+          .then((res) => res.blob())
+          .then((blob) => {
+            const file = new File([blob], "image", { type: blob.type });
+            console.log(blob);
+
+            resizeFileToThumbnail(file).then((res) => {
+              if (res) setThumbnail(res as string);
+            });
+            resizeFileToIcon(file).then((res) => {
+              if (res) setIcon(res as string);
+            });
+          })
+          .catch((err) => console.log(err));
     });
   }
 
@@ -144,13 +148,13 @@ export function Crop() {
           imgRef.current,
           previewCanvasRef.current,
           completedCrop,
-          scale,
-          rotate
+          scale
+          // rotate (in case rotation is needed)
         );
       }
     },
     100,
-    [completedCrop, scale, rotate]
+    [completedCrop, scale] //rotate] (in case rotation is needed)]
   );
 
   return (
@@ -181,7 +185,10 @@ export function Crop() {
               className=" accent-primary"
             />
           </>
-          {/* <div>
+
+          {/* 
+           in case rotation is needed
+          <div>
             <label htmlFor="rotate-input">Rotate: </label>
             <input
               id="rotate-input"
@@ -214,7 +221,8 @@ export function Crop() {
               alt="Crop me"
               src={imgSrc}
               style={{
-                transform: `scale(${scale}) rotate(${rotate}deg)`,
+                transform: `scale(${scale})`,
+                //  in case rotation is needed ==> `transform(${rotate})`
               }}
               onLoad={onImageLoad}
             />
