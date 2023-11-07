@@ -1,15 +1,19 @@
 import { useState } from "react";
 import { Crop } from "./Crop/Crop";
-import { Button, Chip } from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
 
 export function IconsAndThumbnail() {
   const [icon, setIcon] = useState<string>("");
   const [thumbnail, setThumbnail] = useState<string>("");
 
-  const downloadFileButton = async (fileUri: string, resolution: string) => {
-    const name = `${`Icon_${resolution}_${(Math.random() * 1000000).toFixed(
-      0
-    )}`}`;
+  const downloadFileButton = async (
+    fileName: string,
+    fileUri: string,
+    resolution: string
+  ) => {
+    const name = `${`${fileName}_${resolution}_${(
+      Math.random() * 1000000
+    ).toFixed(0)}`}`;
 
     try {
       const response = await fetch(fileUri);
@@ -29,18 +33,16 @@ export function IconsAndThumbnail() {
 
   return (
     <div className="ml-24 pt-10 min-h-screen">
-      <Chip
-        className="flex mx-auto mb-5  text-2xl py-6 md:text-3xl "
-        variant="light"
-      >
+      <p className="mb-5 text-5xl py-6 text-center ">
         Icon & Thumbnail generator
-      </Chip>
+      </p>
       <Crop setIcon={setIcon} setThumbnail={setThumbnail} />
       <div className="flex justify-evenly mt-5">
         <Button
-          onClick={() => downloadFileButton(icon, "128x128")}
+          onClick={() => downloadFileButton("Icon", icon, "128x128")}
           color="primary"
           className="text-lg font-semibold py-6"
+          isDisabled={!icon}
         >
           <p>128 x 128</p>
           <svg
@@ -60,8 +62,9 @@ export function IconsAndThumbnail() {
         </Button>
         <Button
           className="text-lg font-semibold py-6"
-          onClick={() => downloadFileButton(thumbnail, "512x512")}
+          onClick={() => downloadFileButton("Thumbnail", thumbnail, "512x512")}
           color="primary"
+          isDisabled={!thumbnail}
         >
           <p>512 x 512</p>
           <svg

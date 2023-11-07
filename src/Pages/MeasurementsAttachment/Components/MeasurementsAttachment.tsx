@@ -1,7 +1,6 @@
 import { Form } from "./Form";
 import { DefaultMeasurements } from "./DefaultMeasurements";
 import { Defaults } from "./Defaults";
-import { Chip } from "@nextui-org/react";
 import { useState } from "react";
 
 export function MeasurementsAttachment() {
@@ -9,18 +8,14 @@ export function MeasurementsAttachment() {
   const [valueY, setValueY] = useState(0);
   const [valueZ, setValueZ] = useState(0);
   const [checked, setChecked] = useState(false);
+  const [fullValue, setFullValue] = useState(" ");
+  const [manualChecked, setManualChecked] = useState(false);
   const [valueXFullMeasurements, setValueXFullMeasurements] = useState(0);
   const [valueYFullMeasurements, setValueYFullMeasurements] = useState(0);
   const [valueZFullMeasurements, setValueZFullMeasurements] = useState(0);
-  const [fullValue, setFullValue] = useState(" ");
   return (
     <div className="ml-24 pt-10 min-h-screen">
-      <Chip
-        className="flex mx-auto mb-5  text-2xl py-6 md:text-3xl "
-        variant="light"
-      >
-        Enter measurements from Masterlist / Ticket
-      </Chip>
+      <p className="mb-5 text-5xl py-6  text-center">Measurements</p>
       <Form
         valueXFullMeasurements={valueXFullMeasurements}
         valueYFullMeasurements={valueYFullMeasurements}
@@ -33,6 +28,8 @@ export function MeasurementsAttachment() {
         setValueYFullMeasurements={setValueYFullMeasurements}
         setValueZFullMeasurements={setValueZFullMeasurements}
         setFullValue={setFullValue}
+        manualChecked={manualChecked}
+        setManualChecked={setManualChecked}
       />
       <DefaultMeasurements valueX={valueX} valueY={valueY} valueZ={valueZ} />
       <Defaults

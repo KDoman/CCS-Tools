@@ -27,7 +27,7 @@ export async function canvasPreview(
   ctx.imageSmoothingQuality = "high";
 
   ctx.fillStyle = "white";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillRect(0, 0, 2000, 2000);
 
   const cropX = crop.x * scaleX;
   const cropY = crop.y * scaleY;

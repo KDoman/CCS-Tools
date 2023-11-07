@@ -1,5 +1,6 @@
 import { Chip, Image, Snippet, Switch } from "@nextui-org/react";
 import { IDefaults } from "../Interface/MeasurementProps";
+import ModalInfo from "./ModalInfo";
 
 export function Defaults({ valueX, valueZ, checked, setChecked }: IDefaults) {
   const showDefaulsRotation = () => {
@@ -7,8 +8,11 @@ export function Defaults({ valueX, valueZ, checked, setChecked }: IDefaults) {
   };
   return (
     <div>
-      <div className="flex justify-center items-center mt-10 mb-5">
-        <p className="mr-4 font-semibold">ROTATION</p>
+      <p className="mb-5 text-3xl mt-10 flex align-center justify-center">
+        Defaults <ModalInfo />
+      </p>
+      <div className="flex justify-center items-center">
+        <p className="mr-4 font-semibold">ROTATION </p>
         <Switch
           onChange={showDefaulsRotation}
           size="lg"
@@ -19,20 +23,6 @@ export function Defaults({ valueX, valueZ, checked, setChecked }: IDefaults) {
       {!checked ? (
         // NO ROTATION
         <>
-          <Chip
-            color="primary"
-            className="text-lg md:text-xl mx-auto flex py-5 rounded-xl"
-            variant="bordered"
-          >
-            Defaults (no rotation)
-          </Chip>
-          <Chip
-            className="flex mx-auto mt-2 text-sm md:text-md rounded-md"
-            variant="flat"
-            color="primary"
-          >
-            position in which the furniture is displayed
-          </Chip>
           <div className=" md:flex justify-evenly mt-10 block ">
             <div className="flex md:mx-0 mx-auto justify-center">
               <div className="z-0">
@@ -98,29 +88,15 @@ export function Defaults({ valueX, valueZ, checked, setChecked }: IDefaults) {
       ) : (
         // ROTATION
         <>
-          <Chip
-            color="primary"
-            className="text-lg md:text-xl mx-auto flex py-5 rounded-xl"
-            variant="bordered"
-          >
-            Defaults (rotation)
-          </Chip>
-          <Chip
-            className="flex mx-auto mt-2 text-sm md:text-md rounded-md"
-            variant="flat"
-            color="primary"
-          >
-            position in which the furniture is displayed
-          </Chip>
-          <div className="flex justify-center">
-            <div className="grid grid-rows-2 grid-cols-2">
+          <div className="md:flex md:justify-center mt-10">
+            <div className="md:grid md:grid-rows-2 md:grid-cols-2 flex justify-center">
               <div className="row-start-1 row-end-3 my-auto">
                 <Image
                   src="https://raw.githubusercontent.com/KDoman/CCS-Tools/main/public/rotation-kind-right.png"
                   alt="Rotation Kind Right"
                 />
               </div>
-              <div className="mt-10 ml-2">
+              <div className="md:mt-10 mt-16 ml-2">
                 <Chip
                   className="text-sm md:text-lg mb-2 rounded-lg"
                   color="primary"
@@ -141,7 +117,7 @@ export function Defaults({ valueX, valueZ, checked, setChecked }: IDefaults) {
                   </Snippet>
                 </div>
               </div>
-              <div className="mt-2 ml-2">
+              <div className="md:mt-2 mt-16 ml-2">
                 <Chip
                   className="text-sm md:text-lg mb-2 rounded-lg"
                   color="primary"
@@ -163,16 +139,16 @@ export function Defaults({ valueX, valueZ, checked, setChecked }: IDefaults) {
                 </div>
               </div>
             </div>
-            <div className="grid grid-rows-2 grid-cols-2">
-              <div className=" row-start-1 row-end-3 my-auto">
+            <div className="md:grid md:grid-rows-2 md:grid-cols-2 flex justify-center">
+              <div className="row-start-1 row-end-3 my-auto">
                 <Image
                   src="https://raw.githubusercontent.com/KDoman/CCS-Tools/main/public/rotation-kind-left.png"
                   alt="Rotation Kind Right"
                 />
               </div>
-              <div className="mt-10 row-start-1 col-start-1 ml-auto mr-2">
+              <div className="md:mt-10 mt-16 md:row-start-1 md:col-start-1 md:ml-auto mr-2">
                 <Chip
-                  className="text-sm md:text-lg mb-2 float-right rounded-lg"
+                  className="text-sm md:text-lg mb-2 md:float-right rounded-lg"
                   color="primary"
                   variant="bordered"
                 >
@@ -188,12 +164,17 @@ export function Defaults({ valueX, valueZ, checked, setChecked }: IDefaults) {
                   >
                     {((valueX * 2.54) / 2).toFixed(3)}
                   </Snippet>
-                  <Chip color="primary">X</Chip>
+                  <Chip
+                    color="primary"
+                    className="float-left md:float-none mt-1 mr-2 md:m-0"
+                  >
+                    X
+                  </Chip>
                 </div>
               </div>
-              <div className="mt-2 row-start-2 col-start-1 ml-auto mr-2">
+              <div className="md:mt-2 mt-16 md:row-start-2 md:col-start-1 md:ml-auto mr-2">
                 <Chip
-                  className="text-sm md:text-lg mb-2 float-right rounded-lg"
+                  className="text-sm md:text-lg mb-2 md:float-right rounded-lg"
                   color="primary"
                   variant="bordered"
                 >
@@ -209,7 +190,12 @@ export function Defaults({ valueX, valueZ, checked, setChecked }: IDefaults) {
                   >
                     {((valueZ * 2.54) / -2).toFixed(3)}
                   </Snippet>
-                  <Chip color="primary">Z</Chip>
+                  <Chip
+                    color="primary"
+                    className="float-left md:float-none mt-1 mr-2 md:m-0"
+                  >
+                    Z
+                  </Chip>
                 </div>
               </div>
             </div>

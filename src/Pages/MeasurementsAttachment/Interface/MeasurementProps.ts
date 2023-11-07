@@ -10,6 +10,8 @@ export interface IInputMeasurement {
   setValueZFullMeasurements: (newValue: number) => void;
   fullValue: string;
   setFullValue: (newValue: string) => void;
+  manualChecked: boolean;
+  setManualChecked: (newValue: boolean) => void;
 }
 
 export interface IMeasurementsValue {

@@ -12,7 +12,7 @@ import { useDebounceEffect } from "../../../../node_modules/react-image-crop/src
 import "../../../../node_modules/react-image-crop/src/ReactCrop.scss";
 import "../../../../node_modules/react-image-crop/src/demo/index.scss";
 import Resizer from "react-image-file-resizer";
-import { Button } from "@nextui-org/react";
+import { Button, Divider, Spinner } from "@nextui-org/react";
 
 interface Props {
   setThumbnail: (value: string) => void;
@@ -60,6 +60,8 @@ export function Crop({ setThumbnail, setIcon }: Props) {
       );
       reader.readAsDataURL(e.target.files[0]);
     }
+    setIcon("");
+    setThumbnail("");
   }
 
   function onImageLoad(e: React.SyntheticEvent<HTMLImageElement>) {
@@ -123,7 +125,6 @@ export function Crop({ setThumbnail, setIcon }: Props) {
           .then((res) => res.blob())
           .then((blob) => {
             const file = new File([blob], "image", { type: blob.type });
-            console.log(blob);
 
             resizeFileToThumbnail(file).then((res) => {
               if (res) setThumbnail(res as string);
@@ -170,23 +171,22 @@ export function Crop({ setThumbnail, setIcon }: Props) {
           file:bg-primary file:text-zinc-50
           hover:file:bg-slate-600  cursor-pointer border-2 p-3 rounded-xl mb-5 file:hover:cursor-pointer"
         />
-        <div className="crop-ranges-div">
-          <>
-            <p className="font-semibold text-xl">Scale</p>
-            <input
-              id="scale-input"
-              type="range"
-              step="0.1"
-              min={0}
-              max={3}
-              value={scale}
-              disabled={!imgSrc}
-              onChange={(e) => setScale(Number(e.target.value))}
-              className=" accent-primary"
-            />
-          </>
+        <>
+          <p className="font-semibold text-xl">Scale</p>
+          <input
+            id="scale-input"
+            type="range"
+            step="0.1"
+            min={0}
+            max={3}
+            value={scale}
+            disabled={!imgSrc}
+            onChange={(e) => setScale(Number(e.target.value))}
+            className=" accent-primary"
+          />
+        </>
 
-          {/* 
+        {/* 
            in case rotation is needed
           <div>
             <label htmlFor="rotate-input">Rotate: </label>
@@ -204,11 +204,11 @@ export function Crop({ setThumbnail, setIcon }: Props) {
               className="bg-primary"
             />
           </div> */}
-        </div>
       </>
+      <Divider className="my-10" />
 
-      <div className="  w-full flex justify-evenly">
-        {!!imgSrc && (
+      {!!imgSrc ? (
+        <div className="  w-full flex justify-evenly">
           <ReactCrop
             crop={crop}
             onChange={(_, percentCrop) => setCrop(percentCrop)}
@@ -227,23 +227,33 @@ export function Crop({ setThumbnail, setIcon }: Props) {
               onLoad={onImageLoad}
             />
           </ReactCrop>
-        )}
-        <div>
-          {!!completedCrop && (
-            <canvas
-              ref={previewCanvasRef}
-              style={{
-                border: "1px solid black",
-                objectFit: "contain",
-                width: completedCrop.width,
-                height: completedCrop.height,
-                background: "#fff",
-              }}
-            />
-          )}
+          <div>
+            {!!completedCrop && (
+              <canvas
+                ref={previewCanvasRef}
+                style={{
+                  border: "1px solid black",
+                  objectFit: "contain",
+                  width: completedCrop.width,
+                  height: completedCrop.height,
+                  background: "#fff",
+                }}
+              />
+            )}
+          </div>
         </div>
-      </div>
-      <Button color="primary" onClick={setCropImage} className="mt-5 py-6">
+      ) : (
+        <Spinner label="Select File..." />
+      )}
+
+      <Divider className="my-10" />
+
+      <Button
+        color="primary"
+        onClick={setCropImage}
+        className="mt-5 py-6"
+        isDisabled={!imgSrc}
+      >
         <p className="text-lg font-semibold">Set Image</p>
         <svg
           xmlns="http://www.w3.org/2000/svg"

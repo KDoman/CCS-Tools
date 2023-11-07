@@ -1,4 +1,4 @@
-import { Chip, Snippet } from "@nextui-org/react";
+import { Chip, Divider, Snippet } from "@nextui-org/react";
 import { IMeasurementsValue } from "../Interface/MeasurementProps";
 
 export function DefaultMeasurements({
@@ -7,49 +7,51 @@ export function DefaultMeasurements({
   valueZ,
 }: IMeasurementsValue) {
   return (
-    <div>
-      <Chip
-        className="mx-auto flex py-5 text-lg md:text-xl mt-10  rounded-xl"
-        color="primary"
-        variant="bordered"
-      >
-        Default measurements
-      </Chip>
-      <div className="flex justify-center">
-        <div className="my-5">
-          X
-          <Snippet
-            size="sm"
-            hideSymbol={true}
-            className="unselectable ml-2 mb-2"
-            variant="solid"
-            color="primary"
-          >
-            {(valueX * 2.54).toFixed(3)}
-          </Snippet>
-          <br />Y
-          <Snippet
-            size="sm"
-            hideSymbol={true}
-            className="unselectable ml-2 mb-2"
-            variant="solid"
-            color="primary"
-          >
-            {(valueY * 2.54).toFixed(3)}
-          </Snippet>
-          <br />Z
-          <Snippet
-            size="sm"
-            hideSymbol={true}
-            className="unselectable ml-2"
-            variant="solid"
-            color="primary"
-          >
-            {(valueZ * 2.54).toFixed(3)}
-          </Snippet>
-          <br />
+    <>
+      <div className="py-10">
+        <p className="text-center mb-5 text-3xl">Default measurements</p>
+        <div className="flex justify-center items-center">
+          <div>
+            <div className="flex items-center mb-2">
+              <p className="mr-2 font-semibold">X</p>
+              <Snippet
+                size="sm"
+                hideSymbol={true}
+                className="select-none"
+                variant="solid"
+                color="primary"
+              >
+                {(valueX * 2.54).toFixed(3)}
+              </Snippet>
+            </div>
+            <div className="flex items-center mb-2">
+              <p className="mr-2 font-semibold">Y</p>
+              <Snippet
+                size="sm"
+                hideSymbol={true}
+                className="select-none"
+                variant="solid"
+                color="primary"
+              >
+                {(valueY * 2.54).toFixed(3)}
+              </Snippet>
+            </div>
+            <div className="flex items-center">
+              <p className="mr-2 font-semibold">Z</p>
+              <Snippet
+                size="sm"
+                hideSymbol={true}
+                className="select-none"
+                variant="solid"
+                color="primary"
+              >
+                {(valueZ * 2.54).toFixed(3)}
+              </Snippet>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+      <Divider />
+    </>
   );
 }
