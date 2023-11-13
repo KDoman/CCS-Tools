@@ -19,11 +19,13 @@
     "react-image-crop": "^10.1.4",
     "react-image-file-resizer": "^0.4.8",
     "react-router-dom": "^6.8.1",
+    "three": "^0.158.0",
     "yup": "^1.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.12",
     "@types/react-dom": "^18.2.5",
+    "@types/three": "^0.158.2",
     "@vitejs/plugin-react-swc": "^3.0.0",
     "autoprefixer": "^10.4.15",
     "postcss": "^8.4.28",

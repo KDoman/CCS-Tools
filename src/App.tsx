@@ -4,6 +4,7 @@ import { HomePage } from "./Pages/HomePage/HomePage";
 import { MeasurementsAttachment } from "./Pages/MeasurementsAttachment/Components/MeasurementsAttachment";
 import { IconsAndThumbnail } from "./Pages/IconsAndThumbnail/IconsAndThumbnail";
 import { NextUIProvider } from "@nextui-org/react";
+import { GhostRender } from "./Pages/Ghost/GhostRender";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             />
 
             <Route path="/IconsAndThumbnail/" element={<IconsAndThumbnail />} />
+            <Route path="/GhostRender/" element={<GhostRender />} />
           </Routes>
         </Router>
       </div>
