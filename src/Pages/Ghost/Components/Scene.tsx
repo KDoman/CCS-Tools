@@ -4,6 +4,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
 import { OBJExporter } from "three/examples/jsm/exporters/OBJExporter";
+import * as BufferGeometryUtils from "three/examples/jsm/utils/BufferGeometryUtils";
 
 interface SceneProps {
   objSrc: string | null;
@@ -47,23 +48,33 @@ const Scene = ({ objSrc, isRaf, setIsRaf }: SceneProps) => {
 
   const displayObject = () => {
     const loader = new OBJLoader();
-    const light = new THREE.DirectionalLight(0xffffff, 0.1);
+    const light = new THREE.DirectionalLight(0xffffff, 0.5);
+    light.position.set(0, 100, -100);
+    scene.add(light);
     loader.parse(objSrc!);
     loader.load(
       objSrc!,
       function (object: THREE.Group<THREE.Object3DEventMap>) {
+        object.traverse((child) => {
+          if (child instanceof THREE.Mesh) {
+            child.geometry = BufferGeometryUtils.mergeVertices(child.geometry);
+          }
+        });
         object.rotateY(180 / 57.2958);
 
-        {
-          isRaf ? (object.scale.x = -1) : object;
-        }
-        scene.add(light);
+        isRaf && (object.scale.x = -1);
+
         scene.add(object);
       }
     );
   };
 
   const exportObj = () => {
+    scene.traverse((child) => {
+      if (child instanceof THREE.Mesh) {
+        child.geometry = BufferGeometryUtils.mergeVertices(child.geometry);
+      }
+    });
     const exporter = new OBJExporter();
     const data = exporter.parse(scene);
     const blob = new Blob([data], { type: "text/plain" });
@@ -88,9 +99,23 @@ const Scene = ({ objSrc, isRaf, setIsRaf }: SceneProps) => {
       <div className="border border-black max-w-max mx-auto" ref={sceneRef} />
       <Button
         onClick={exportObj}
-        className="mx-auto block mt-5 bg-primary text-lg font-semibold text-zinc-50"
+        className="mx-auto mt-10 bg-primary text-lg font-semibold text-zinc-50 flex"
       >
-        Flip
+        Download
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="w-7 h-7 "
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"
+          />
+        </svg>
       </Button>
     </>
   );
