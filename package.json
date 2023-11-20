@@ -11,6 +11,7 @@
   "dependencies": {
     "@nextui-org/react": "^2.1.7",
     "bootstrap": "^5.3.1",
+    "earcut": "^2.2.4",
     "framer-motion": "^10.16.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.8.0",
@@ -22,9 +23,11 @@
     "simplify-3d": "^1.0.0",
     "simplify-js": "^1.2.4",
     "three": "^0.158.0",
+    "three-mesh-bvh": "^0.6.8",
     "yup": "^1.0.0"
   },
   "devDependencies": {
+    "@types/earcut": "^2.1.4",
     "@types/react": "^18.2.12",
     "@types/react-dom": "^18.2.5",
     "@types/three": "^0.158.2",
