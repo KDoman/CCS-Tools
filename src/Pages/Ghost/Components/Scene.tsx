@@ -50,24 +50,26 @@ const Scene = ({ objSrc, isRaf, setIsRaf }: SceneProps) => {
   let newIndex: any = [];
 
   const displayObject = () => {
-    const loader = new OBJLoader();
     const light = new THREE.DirectionalLight(0xffffff, 1);
+    const loader = new OBJLoader();
     loader.load(
       objSrc!,
       function (object: THREE.Group<THREE.Object3DEventMap>) {
         const material = new THREE.MeshStandardMaterial({
           emissive: 0x3c4a53,
         });
-        object.traverse((child) => {
-          if (child instanceof THREE.Mesh) {
-            child.geometry = BufferGeometryUtils.mergeVertices(child.geometry);
-            const geometry = child.geometry as THREE.BufferGeometry;
+        object.traverse((mesh) => {
+          if (mesh instanceof THREE.Mesh) {
+            mesh.geometry = BufferGeometryUtils.mergeVertices(mesh.geometry);
+            const geometry = mesh.geometry as THREE.BufferGeometry;
+            if (isRaf) {
+              mesh.scale.x = -1;
+            }
 
-            // Pobierz oryginalne wierzchołki i indeksy
             const positions = geometry.attributes.position.array;
+
             const indices = geometry.index ? geometry.index.array : null;
 
-            // Mapuj indeksy na unikalne wierzchołki
             const vertexMap = new Map();
 
             if (indices) {
@@ -76,7 +78,6 @@ const Scene = ({ objSrc, isRaf, setIsRaf }: SceneProps) => {
                 const index2 = indices[i + 1];
                 const index3 = indices[i + 2];
 
-                // Stworzenie klucza na podstawie współrzędnych wierzchołków
                 const vertexKey1 = `${positions[index1 * 3]}_${
                   positions[index1 * 3 + 1]
                 }_${positions[index1 * 3 + 2]}`;
@@ -87,7 +88,6 @@ const Scene = ({ objSrc, isRaf, setIsRaf }: SceneProps) => {
                   positions[index3 * 3 + 1]
                 }_${positions[index3 * 3 + 2]}`;
 
-                // Sprawdź, czy wierzchołek już istnieje w mapie
                 if (!vertexMap.has(vertexKey1)) {
                   const newIndexValue = newPositions.length / 3;
                   vertexMap.set(vertexKey1, newIndexValue);
@@ -118,7 +118,6 @@ const Scene = ({ objSrc, isRaf, setIsRaf }: SceneProps) => {
                   );
                 }
 
-                // Dodaj nowe indeksy
                 newIndex.push(
                   vertexMap.get(vertexKey1)!,
                   vertexMap.get(vertexKey2)!,
@@ -126,7 +125,6 @@ const Scene = ({ objSrc, isRaf, setIsRaf }: SceneProps) => {
                 );
               }
             } else {
-              // Jeśli nie ma indeksów, użyj prostego dodawania wierzchołków
               for (let i = 0; i < positions.length; i += 3) {
                 newPositions.push(
                   positions[i],
@@ -136,16 +134,11 @@ const Scene = ({ objSrc, isRaf, setIsRaf }: SceneProps) => {
                 newIndex.push(i / 3);
               }
             }
-
-            child.material = material;
+            mesh.material = material;
           }
         });
+
         object.rotateY(180 / 57.2958);
-
-        if (isRaf) {
-          object.scale.x = -1;
-        }
-
         scene.add(object);
         scene.add(light);
       }
@@ -154,14 +147,8 @@ const Scene = ({ objSrc, isRaf, setIsRaf }: SceneProps) => {
 
   const exportObj = () => {
     const simplifiedGeometry = new THREE.BufferGeometry();
-    if (isRaf) {
-      simplifiedGeometry.applyMatrix4(new THREE.Matrix4().makeScale(-1, 1, 1));
-    }
-    scene.traverse((child) => {
-      if (child instanceof THREE.Mesh) {
-        child.geometry.computeVertexNormals();
-
-        // Aktualizuj geometrię
+    scene.traverse((mesh) => {
+      if (mesh instanceof THREE.Mesh) {
         simplifiedGeometry.setAttribute(
           "position",
           new THREE.BufferAttribute(new Float32Array(newPositions), 3)
@@ -169,9 +156,14 @@ const Scene = ({ objSrc, isRaf, setIsRaf }: SceneProps) => {
         simplifiedGeometry.setIndex(
           new THREE.BufferAttribute(new Uint32Array(newIndex), 1)
         );
-
-        child.geometry.dispose();
-        child.geometry = simplifiedGeometry;
+        if (isRaf) {
+          const normalArray = mesh.geometry.attributes.normal.array;
+          const negatedArray = normalArray.map((normal: any) => -normal);
+          mesh.geometry.attributes.normal.array = negatedArray;
+          mesh.geometry.attributes.normal.needsUpdate = true;
+        }
+        mesh.geometry.dispose();
+        mesh.geometry = simplifiedGeometry;
       }
     });
     const exporter = new OBJExporter();

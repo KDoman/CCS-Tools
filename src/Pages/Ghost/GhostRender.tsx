@@ -8,7 +8,7 @@ export const GhostRender = () => {
   const [isRaf, setIsRaf] = useState<boolean>(false);
 
   return (
-    <div className="ml-24 pt-10 min-h-screen">
+    <div className=" pt-10 min-h-screen">
       <p className="mb-5 text-5xl py-6 text-center ">Ghost generator</p>
       <Input setObjSrc={setObjSrc} />
       <Divider className="mb-10 mt-5" />
