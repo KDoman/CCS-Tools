@@ -13,6 +13,8 @@ import "../../../../node_modules/react-image-crop/src/ReactCrop.scss";
 import "../../../../node_modules/react-image-crop/src/demo/index.scss";
 import Resizer from "react-image-file-resizer";
 import { Button, Divider, Spinner } from "@nextui-org/react";
+import axios from "axios";
+import { log } from "console";
 
 interface Props {
   setThumbnail: (value: string) => void;
@@ -67,6 +69,38 @@ export function Crop({ setThumbnail, setIcon }: Props) {
   function onImageLoad(e: React.SyntheticEvent<HTMLImageElement>) {
     const { width, height } = e.currentTarget;
     setCrop(centerAspectCrop(width, height, aspect));
+  }
+
+  async function getImgFromUrl(url: string) {
+    const imgURL: string = extractImageUrl(url);
+    return axios
+      .get(imgURL, { responseType: "arraybuffer" })
+      .then((response) => {
+        let image = btoa(
+          new Uint8Array(response.data).reduce(
+            (data, byte) => data + String.fromCharCode(byte),
+            ""
+          )
+        );
+        setImgSrc(
+          `data:${response.headers[
+            "content-type"
+          ].toLowerCase()};base64,${image}`
+        );
+      });
+  }
+
+  function extractImageUrl(inputUrl: string) {
+    const cdnIndex = inputUrl.indexOf("cdn");
+    const pngIndex = inputUrl.indexOf(".png");
+
+    if (cdnIndex !== -1 && pngIndex !== -1 && cdnIndex < pngIndex) {
+      const extractedUrl = inputUrl.substring(cdnIndex, pngIndex + 4);
+      return `https://${extractedUrl}`;
+    } else {
+      console.log("Something went wrong with extracting image URL");
+      return "";
+    }
   }
 
   const resizeFileToIcon = (file: Blob) =>
@@ -155,7 +189,7 @@ export function Crop({ setThumbnail, setIcon }: Props) {
       }
     },
     100,
-    [completedCrop, scale] //rotate] (in case rotation is needed)]
+    [completedCrop, scale, imgSrc] //rotate] (in case rotation is needed)]
   );
 
   return (
@@ -183,6 +217,12 @@ export function Crop({ setThumbnail, setIcon }: Props) {
             disabled={!imgSrc}
             onChange={(e) => setScale(Number(e.target.value))}
             className=" accent-primary"
+          />
+          <input
+            type="text"
+            placeholder="Paste URL"
+            className=" border border-solid border-primary p-1 w-[300px] rounded-md mt-10"
+            onChange={(e) => getImgFromUrl(e.target.value)}
           />
         </>
 
