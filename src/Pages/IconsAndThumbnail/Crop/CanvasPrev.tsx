@@ -26,7 +26,7 @@ export async function canvasPreview(
   ctx.scale(pixelRatio, pixelRatio);
   ctx.imageSmoothingQuality = "high";
 
-  ctx.fillStyle = "white";
+  ctx.fillStyle = "transparent";
 
   ctx.fillRect(0, 0, 2000, 2000);
 
