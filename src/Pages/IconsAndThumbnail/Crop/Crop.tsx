@@ -14,7 +14,6 @@ import "../../../../node_modules/react-image-crop/src/demo/index.scss";
 import Resizer from "react-image-file-resizer";
 import { Button, Divider, Spinner } from "@nextui-org/react";
 import axios from "axios";
-import { log } from "console";
 
 interface Props {
   setThumbnail: (value: string) => void;
