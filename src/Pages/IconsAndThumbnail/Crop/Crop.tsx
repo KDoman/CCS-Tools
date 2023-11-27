@@ -12,7 +12,7 @@ import { useDebounceEffect } from "../../../../node_modules/react-image-crop/src
 import "../../../../node_modules/react-image-crop/src/ReactCrop.scss";
 import "../../../../node_modules/react-image-crop/src/demo/index.scss";
 import Resizer from "react-image-file-resizer";
-import { Button, Divider, Spinner } from "@nextui-org/react";
+import { Button, Checkbox, Divider, Spinner } from "@nextui-org/react";
 import axios from "axios";
 
 interface Props {
@@ -29,7 +29,7 @@ function centerAspectCrop(
     makeAspectCrop(
       {
         unit: "%",
-        width: 100,
+        width: 50,
       },
       aspect,
       mediaWidth,
@@ -41,6 +41,7 @@ function centerAspectCrop(
 }
 //@ts-ignore
 export function Crop({ setThumbnail, setIcon }: Props) {
+  const [transparentBg, setTransparentBg] = useState<boolean>(true);
   const aspect: number = 1;
   const blobUrlRef = useRef("");
   const [completedCrop, setCompletedCrop] = useState<PixelCrop>();
@@ -63,6 +64,7 @@ export function Crop({ setThumbnail, setIcon }: Props) {
     }
     setIcon("");
     setThumbnail("");
+    setScale(1);
   }
 
   function onImageLoad(e: React.SyntheticEvent<HTMLImageElement>) {
@@ -71,6 +73,8 @@ export function Crop({ setThumbnail, setIcon }: Props) {
   }
 
   async function getImgFromUrl(url: string) {
+    setScale(1);
+    setCrop(undefined);
     const imgURL: string = extractImageUrl(url);
     return axios
       .get(imgURL, { responseType: "arraybuffer" })
@@ -90,6 +94,8 @@ export function Crop({ setThumbnail, setIcon }: Props) {
   }
 
   function extractImageUrl(inputUrl: string) {
+    setIcon("");
+    setThumbnail("");
     const cdnIndex = inputUrl.indexOf("cdn");
     const pngIndex = inputUrl.indexOf(".png");
 
@@ -182,17 +188,24 @@ export function Crop({ setThumbnail, setIcon }: Props) {
           imgRef.current,
           previewCanvasRef.current,
           completedCrop,
-          scale
+          scale,
+          transparentBg
           // rotate (in case rotation is needed)
         );
       }
     },
     100,
-    [completedCrop, scale, imgSrc] //rotate] (in case rotation is needed)]
+    [completedCrop, scale, imgSrc, transparentBg] //rotate] (in case rotation is needed)]
   );
 
+  const toggleTransparentBg = () => {
+    setIcon("");
+    setThumbnail("");
+    setTransparentBg((current) => !current);
+  };
+
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center ">
       <>
         <input
           type="file"
@@ -244,43 +257,47 @@ export function Crop({ setThumbnail, setIcon }: Props) {
             />
           </div> */}
       </>
-      <Divider className="my-10" />
+      <Divider className="my-10 " />
 
       {!!imgSrc ? (
-        <div className="  w-full flex justify-evenly">
-          <ReactCrop
-            crop={crop}
-            onChange={(_, percentCrop) => setCrop(percentCrop)}
-            onComplete={(c) => setCompletedCrop(c)}
-            aspect={aspect}
-            className="max-w-2xl"
-          >
-            <img
-              ref={imgRef}
-              alt="Crop me"
-              src={imgSrc}
-              style={{
-                transform: `scale(${scale})`,
-                //  in case rotation is needed ==> `transform(${rotate})`
-              }}
-              onLoad={onImageLoad}
-            />
-          </ReactCrop>
-          <div>
-            {!!completedCrop && (
-              <canvas
-                ref={previewCanvasRef}
+        <>
+          <div className="  w-full flex justify-evenly bg-slate-200">
+            <ReactCrop
+              crop={crop}
+              onChange={(_, percentCrop) => setCrop(percentCrop)}
+              onComplete={(c) => setCompletedCrop(c)}
+              aspect={aspect}
+              className="max-w-2xl"
+            >
+              <img
+                ref={imgRef}
+                alt="Crop me"
+                src={imgSrc}
                 style={{
-                  border: "1px solid black",
-                  objectFit: "contain",
-                  width: completedCrop.width,
-                  height: completedCrop.height,
-                  background: "#fff",
+                  transform: `scale(${scale})`,
+                  //  in case rotation is needed ==> `transform(${rotate})`
                 }}
+                onLoad={onImageLoad}
               />
-            )}
+            </ReactCrop>
+            <div>
+              {!!completedCrop && (
+                <canvas
+                  ref={previewCanvasRef}
+                  style={{
+                    border: "1px solid black",
+                    objectFit: "contain",
+                    width: completedCrop.width,
+                    height: completedCrop.height,
+                  }}
+                />
+              )}
+            </div>
           </div>
-        </div>
+          <Checkbox className="font-bold mt-5" onClick={toggleTransparentBg}>
+            White Background
+          </Checkbox>
+        </>
       ) : (
         <Spinner label="Select File..." />
       )}

@@ -28,11 +28,10 @@ export function IconsAndThumbnail() {
     } catch (error) {
       console.error("Wystąpił błąd podczas pobierania pliku:", error);
     }
-    console.log(thumbnail, icon);
   };
 
   return (
-    <div className="ml-24 pt-10 min-h-screen">
+    <div className="ml-24 pt-10 min-h-screen ">
       <p className="mb-5 text-5xl py-6 text-center ">
         Icon & Thumbnail generator
       </p>

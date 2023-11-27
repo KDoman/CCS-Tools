@@ -7,6 +7,7 @@ export async function canvasPreview(
   canvas: HTMLCanvasElement,
   crop: PixelCrop,
   scale = 1,
+  transparentBg: boolean,
   rotate = 0
 ) {
   const ctx = canvas.getContext("2d");
@@ -26,7 +27,9 @@ export async function canvasPreview(
   ctx.scale(pixelRatio, pixelRatio);
   ctx.imageSmoothingQuality = "high";
 
-  ctx.fillStyle = "transparent";
+  {
+    transparentBg ? (ctx.fillStyle = "transparent") : (ctx.fillStyle = "white");
+  }
 
   ctx.fillRect(0, 0, 2000, 2000);
 
