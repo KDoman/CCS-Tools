@@ -56,6 +56,8 @@ export function Crop({ setThumbnail, setIcon }: Props) {
   // const [rotate, setRotate] = useState<number>(0);
 
   function onSelectFile(e: React.ChangeEvent<HTMLInputElement>) {
+    setError("");
+    setIsLoading(false);
     if (e.target.files && e.target.files.length > 0) {
       setCrop(undefined);
       const reader = new FileReader();
@@ -64,6 +66,7 @@ export function Crop({ setThumbnail, setIcon }: Props) {
       );
       reader.readAsDataURL(e.target.files[0]);
     }
+
     setIcon("");
     setThumbnail("");
     setScale(1);
