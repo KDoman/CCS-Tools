@@ -42,6 +42,8 @@ function centerAspectCrop(
 //@ts-ignore
 export function Crop({ setThumbnail, setIcon }: Props) {
   const [transparentBg, setTransparentBg] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
   const aspect: number = 1;
   const blobUrlRef = useRef("");
   const [completedCrop, setCompletedCrop] = useState<PixelCrop>();
@@ -73,6 +75,8 @@ export function Crop({ setThumbnail, setIcon }: Props) {
   }
 
   async function getImgFromUrl(url: string) {
+    setError("");
+    setIsLoading(true);
     setScale(1);
     setCrop(undefined);
     const imgURL: string = extractImageUrl(url);
@@ -90,7 +94,9 @@ export function Crop({ setThumbnail, setIcon }: Props) {
             "content-type"
           ].toLowerCase()};base64,${image}`
         );
-      });
+      })
+      .catch(() => setError("Try again!"))
+      .finally(() => setIsLoading(false));
   }
 
   function extractImageUrl(inputUrl: string) {
@@ -103,7 +109,6 @@ export function Crop({ setThumbnail, setIcon }: Props) {
       const extractedUrl = inputUrl.substring(cdnIndex, pngIndex + 4);
       return `https://${extractedUrl}`;
     } else {
-      console.log("Something went wrong with extracting image URL");
       return "";
     }
   }
@@ -259,47 +264,62 @@ export function Crop({ setThumbnail, setIcon }: Props) {
       </>
       <Divider className="my-10 " />
 
-      {!!imgSrc ? (
-        <>
-          <div className="  w-full flex justify-evenly bg-slate-200">
-            <ReactCrop
-              crop={crop}
-              onChange={(_, percentCrop) => setCrop(percentCrop)}
-              onComplete={(c) => setCompletedCrop(c)}
-              aspect={aspect}
-              className="max-w-2xl"
-            >
-              <img
-                ref={imgRef}
-                alt="Crop me"
-                src={imgSrc}
-                style={{
-                  transform: `scale(${scale})`,
-                  //  in case rotation is needed ==> `transform(${rotate})`
-                }}
-                onLoad={onImageLoad}
-              />
-            </ReactCrop>
-            <div>
-              {!!completedCrop && (
-                <canvas
-                  ref={previewCanvasRef}
-                  style={{
-                    border: "1px solid black",
-                    objectFit: "contain",
-                    width: completedCrop.width,
-                    height: completedCrop.height,
-                  }}
-                />
-              )}
-            </div>
-          </div>
-          <Checkbox className="font-bold mt-5" onClick={toggleTransparentBg}>
-            White Background
-          </Checkbox>
-        </>
+      {error ? (
+        <p>Something went wrong. Make sure URL is okey ;)</p>
       ) : (
-        <Spinner label="Select File..." />
+        <>
+          {isLoading ? (
+            <p className="font-bold">Loading</p>
+          ) : (
+            <>
+              {!!imgSrc ? (
+                <>
+                  <div className="  w-full flex justify-evenly bg-slate-200">
+                    <ReactCrop
+                      crop={crop}
+                      onChange={(_, percentCrop) => setCrop(percentCrop)}
+                      onComplete={(c) => setCompletedCrop(c)}
+                      aspect={aspect}
+                      className="max-w-2xl"
+                    >
+                      <img
+                        ref={imgRef}
+                        alt="Crop me"
+                        src={imgSrc}
+                        style={{
+                          transform: `scale(${scale})`,
+                          //  in case rotation is needed ==> `transform(${rotate})`
+                        }}
+                        onLoad={onImageLoad}
+                      />
+                    </ReactCrop>
+                    <div>
+                      {!!completedCrop && (
+                        <canvas
+                          ref={previewCanvasRef}
+                          style={{
+                            border: "1px solid black",
+                            objectFit: "contain",
+                            width: completedCrop.width,
+                            height: completedCrop.height,
+                          }}
+                        />
+                      )}
+                    </div>
+                  </div>
+                  <Checkbox
+                    className="font-bold mt-5"
+                    onClick={toggleTransparentBg}
+                  >
+                    White Background
+                  </Checkbox>
+                </>
+              ) : (
+                <Spinner label="Select File..." />
+              )}
+            </>
+          )}
+        </>
       )}
 
       <Divider className="my-10" />
