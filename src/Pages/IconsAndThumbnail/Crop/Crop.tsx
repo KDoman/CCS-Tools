@@ -1,8 +1,6 @@
 import React, { useState, useRef } from "react";
 
-import ReactCrop, {
-  centerCrop,
-  makeAspectCrop,
+import {
   Crop,
   PixelCrop,
 } from "../../../../node_modules/react-image-crop/dist";
@@ -12,36 +10,30 @@ import { useDebounceEffect } from "../../../../node_modules/react-image-crop/src
 import "../../../../node_modules/react-image-crop/src/ReactCrop.scss";
 import "../../../../node_modules/react-image-crop/src/demo/index.scss";
 import Resizer from "react-image-file-resizer";
-import { Button, Checkbox, Divider, Spinner } from "@nextui-org/react";
+import {
+  Button,
+  Divider,
+  Input,
+  Progress,
+  Slider,
+  Spinner,
+} from "@nextui-org/react";
 import axios from "axios";
+import { centerAspectCrop } from "../../../Services/Crop/crop-services";
+import ErrorComponentMessage from "./Components/ErrorComponentMessage";
+import DisplayReactCrop from "./Components/DisplayReactCrop";
 
 interface Props {
   setThumbnail: (value: string) => void;
   setIcon: (value: string) => void;
 }
 
-function centerAspectCrop(
-  mediaWidth: number,
-  mediaHeight: number,
-  aspect: number
-) {
-  return centerCrop(
-    makeAspectCrop(
-      {
-        unit: "%",
-        width: 100,
-      },
-      aspect,
-      mediaWidth,
-      mediaHeight
-    ),
-    mediaWidth,
-    mediaHeight
-  );
-}
 //@ts-ignore
 export function Crop({ setThumbnail, setIcon }: Props) {
   const [transparentBg, setTransparentBg] = useState<boolean>(true);
+  const [inputImgValue, setInputImgValue] = useState<null | EventTarget>(null);
+  const [inputValue, setInputValue] = useState<string>("");
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const aspect: number = 1;
@@ -55,10 +47,12 @@ export function Crop({ setThumbnail, setIcon }: Props) {
   // feature rotate option (in case if needed)
   // const [rotate, setRotate] = useState<number>(0);
 
-  function onSelectFile(e: React.ChangeEvent<HTMLInputElement>) {
+  async function onSelectFile(e: React.ChangeEvent<HTMLInputElement>) {
+    setScale(1);
     setError("");
-    setIsLoading(false);
+    setIsLoading(true);
     if (e.target.files && e.target.files.length > 0) {
+      setInputImgValue(e.target);
       setCrop(undefined);
       const reader = new FileReader();
       reader.addEventListener("load", () =>
@@ -66,10 +60,9 @@ export function Crop({ setThumbnail, setIcon }: Props) {
       );
       reader.readAsDataURL(e.target.files[0]);
     }
-
+    setIsLoading(false);
     setIcon("");
     setThumbnail("");
-    setScale(1);
   }
 
   function onImageLoad(e: React.SyntheticEvent<HTMLImageElement>) {
@@ -78,9 +71,9 @@ export function Crop({ setThumbnail, setIcon }: Props) {
   }
 
   async function getImgFromUrl(url: string) {
+    setScale(1);
     setError("");
     setIsLoading(true);
-    setScale(1);
     setCrop(undefined);
     const imgURL: string = extractImageUrl(url);
     return axios
@@ -98,7 +91,7 @@ export function Crop({ setThumbnail, setIcon }: Props) {
           ].toLowerCase()};base64,${image}`
         );
       })
-      .catch(() => setError("Try again!"))
+      .catch(() => setError("Something went wrong. Make sure URL is okey ;)"))
       .finally(() => setIsLoading(false));
   }
 
@@ -217,34 +210,47 @@ export function Crop({ setThumbnail, setIcon }: Props) {
       <>
         <input
           type="file"
-          accept="image/*"
+          accept="image"
           onChange={onSelectFile}
           className="file:mr-4 file:py-2 file:px-4
+          max-w-[300px]
           file:rounded-xl file:border-0
            file:font-semibold font-semibold
           file:bg-primary file:text-zinc-50
-          hover:file:bg-slate-600  cursor-pointer border-2 p-3 rounded-xl mb-5 file:hover:cursor-pointer"
+          hover:file:bg-slate-600  cursor-pointer border-2 p-3 rounded-xl file:hover:cursor-pointer"
         />
-        <>
-          <p className="font-semibold text-xl">Scale</p>
-          <input
-            id="scale-input"
-            type="range"
-            step="0.1"
-            min={0}
-            max={3}
-            value={scale}
-            disabled={!imgSrc}
-            onChange={(e) => setScale(Number(e.target.value))}
-            className=" accent-primary"
-          />
-          <input
-            type="text"
-            placeholder="Paste URL"
-            className=" border border-solid border-primary p-1 w-[300px] rounded-md mt-10"
-            onChange={(e) => getImgFromUrl(e.target.value)}
-          />
-        </>
+        <Divider className="max-w-[300px] my-3" />
+        <Input
+          type="text"
+          label="Paste URL"
+          className="max-w-[300px]"
+          variant="bordered"
+          value={inputValue}
+          onChange={(e) => {
+            setInputValue(e.target.value);
+            getImgFromUrl(e.target.value);
+            setInputImgValue(null);
+          }}
+          isClearable
+          onClear={() => {
+            setInputValue("");
+            getImgFromUrl("");
+          }}
+          ref={inputRef}
+        />
+        <Slider
+          size="md"
+          step={0.1}
+          color="primary"
+          label="Scale"
+          showSteps={true}
+          maxValue={3}
+          minValue={0}
+          defaultValue={scale}
+          value={scale}
+          className="max-w-[300px] mt-10"
+          onChange={(e) => setScale(Number(e))}
+        />
 
         {/* 
            in case rotation is needed
@@ -267,64 +273,43 @@ export function Crop({ setThumbnail, setIcon }: Props) {
       </>
       <Divider className="my-10 " />
 
-      {error ? (
-        <p>Something went wrong. Make sure URL is okey ;)</p>
+      {!inputValue && !inputImgValue ? (
+        <Spinner label="Select file or paste URL" />
       ) : (
         <>
-          {isLoading ? (
-            <p className="font-bold">Loading</p>
+          {error ? (
+            <ErrorComponentMessage error={error} />
           ) : (
             <>
-              {!!imgSrc ? (
+              {isLoading ? (
                 <>
-                  <div className="  w-full flex justify-evenly bg-slate-200">
-                    <ReactCrop
-                      crop={crop}
-                      onChange={(_, percentCrop) => setCrop(percentCrop)}
-                      onComplete={(c) => setCompletedCrop(c)}
-                      aspect={aspect}
-                      className="max-w-2xl"
-                    >
-                      <img
-                        ref={imgRef}
-                        alt="Crop me"
-                        src={imgSrc}
-                        style={{
-                          transform: `scale(${scale})`,
-                          //  in case rotation is needed ==> `transform(${rotate})`
-                        }}
-                        onLoad={onImageLoad}
-                      />
-                    </ReactCrop>
-                    <div>
-                      {!!completedCrop && (
-                        <canvas
-                          ref={previewCanvasRef}
-                          style={{
-                            border: "1px solid black",
-                            objectFit: "contain",
-                            width: completedCrop.width,
-                            height: completedCrop.height,
-                          }}
-                        />
-                      )}
-                    </div>
-                  </div>
-                  <Checkbox
-                    className="font-bold mt-5"
-                    onClick={toggleTransparentBg}
-                  >
-                    White Background
-                  </Checkbox>
+                  <p className="mb-4">Loading...</p>
+                  <Progress
+                    isIndeterminate
+                    aria-label="loading"
+                    className="max-w-md"
+                    size="sm"
+                  />
                 </>
               ) : (
-                <Spinner label="Select File..." />
+                <DisplayReactCrop
+                  imgRef={imgRef}
+                  imgSrc={imgSrc}
+                  crop={crop}
+                  setCrop={setCrop}
+                  setCompletedCrop={setCompletedCrop}
+                  scale={scale}
+                  onImageLoad={onImageLoad}
+                  toggleTransparentBg={toggleTransparentBg}
+                  completedCrop={completedCrop}
+                  previewCanvasRef={previewCanvasRef}
+                  aspect={aspect}
+                />
               )}
             </>
           )}
         </>
       )}
-
       <Divider className="my-10" />
 
       <Button
