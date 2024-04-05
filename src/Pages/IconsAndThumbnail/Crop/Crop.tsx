@@ -22,6 +22,7 @@ import axios from "axios";
 import { centerAspectCrop } from "../../../Services/Crop/crop-services";
 import ErrorComponentMessage from "./Components/ErrorComponentMessage";
 import DisplayReactCrop from "./Components/DisplayReactCrop";
+import { log } from "console";
 
 interface Props {
   setThumbnail: (value: string) => void;
@@ -96,17 +97,24 @@ export function Crop({ setThumbnail, setIcon }: Props) {
   }
 
   function extractImageUrl(inputUrl: string) {
-    setIcon("");
-    setThumbnail("");
-    const cdnIndex = inputUrl.indexOf("cdn");
-    const pngIndex = inputUrl.indexOf(".png");
+    try {
+      const url = new URL(inputUrl);
+      if (url.href) {
+        return url.href;
+        // } else if (url.href.includes("cdn") && url.href.includes(".png")) {
+        //   const cdnIndex = inputUrl.indexOf("cdn");
+        //   const pngIndex = inputUrl.indexOf(".png");
+        //   if (cdnIndex !== -1 && pngIndex !== -1 && cdnIndex < pngIndex) {
+        //     const extractedUrl = inputUrl.substring(cdnIndex, pngIndex + 4);
+        //     console.log(`https://${extractedUrl}`);
 
-    if (cdnIndex !== -1 && pngIndex !== -1 && cdnIndex < pngIndex) {
-      const extractedUrl = inputUrl.substring(cdnIndex, pngIndex + 4);
-      return `https://${extractedUrl}`;
-    } else {
-      return "";
+        //     return `https://${extractedUrl}`;
+        //   }
+      }
+    } catch (error) {
+      console.error("Invalid URL:", error);
     }
+    return "";
   }
 
   const resizeFileToIcon = (file: Blob) =>
